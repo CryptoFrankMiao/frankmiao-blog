@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如何写出有用的文章 - Frank Miao</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-card: #1a1a1a;
+            --bg-hover: #222222;
+            --bg-code: #1e1e1e;
+            --text-primary: #fafafa;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent: #22c55e;
+            --accent-light: #4ade80;
+            --border: #2a2a2a;
+            --border-light: #333333;
+            --shadow: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.5);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: var(--accent);
+            z-index: 1000;
+            transition: width 0.1s;
+            width: 0%;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--bg-primary);
+            font-weight: 700;
+        }
+
+        .back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* Layout */
+        .article-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+        }
+
+        .article-meta-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .article-date {
+            color: var(--text-muted);
+        }
+
+        .article-tags {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .article-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+        }
+
+        /* Article Content */
+        .article-content {
+            max-width: 100%;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1rem;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            scroll-margin-top: 100px;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+            color: var(--text-primary);
+            scroll-margin-top: 100px;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 1.25rem 0 1.5rem 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-content li::marker {
+            color: var(--accent);
+        }
+
+        .article-content blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .article-content strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .article-content code {
+            font-family: 'Fira Code', monospace;
+            background: var(--bg-code);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--accent-light);
+        }
+
+        .article-content pre {
+            background: var(--bg-code);
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .article-content pre code {
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 0;
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .article-content a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        .article-content hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 3rem 0;
+        }
+
+        /* Sections */
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .original-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .original-section h2 {
+            margin-top: 0;
+        }
+
+        .notes-section {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, transparent 100%);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .notes-section h2 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        /* Table of Contents Sidebar */
+        .toc-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .toc-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .toc-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toc-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .toc-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .toc-list a {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+            margin-left: -1rem;
+            transition: all 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: var(--text-primary);
+            border-left-color: var(--accent);
+        }
+
+        .toc-list a.active {
+            color: var(--accent);
+            border-left-color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .article-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .toc-sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 1.25rem;
+            }
+
+            .article-layout {
+                padding: 5rem 1.25rem 3rem;
+            }
+
+            .article-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .article-subtitle {
+                font-size: 1rem;
+            }
+
+            .original-section,
+            .notes-section {
+                padding: 1.5rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.35rem;
+            }
+
+            .article-content h3 {
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">
+                <span class="logo-icon">F</span>
+                Frank Miao
+            </a>
+            <a href="/" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                返回文章列表
+            </a>
+        </div>
+    </header>
+
+    <div class="article-layout">
+        <article>
+            <header class="article-header">
+                <div class="article-meta-top">
+                    <span class="article-date">2026-03-09</span>
+                    <div class="article-tags">
+                        <span class="tag">写作</span><span class="tag">方法论</span>
+                    </div>
+                </div>
+                <h1>如何写出有用的文章</h1>
+            </header>
+
+            <div class="article-content">
+                
+        <div class="section-label">原文精华</div>
+        <section id="original" class="original-section">
+            <h2>核心观点</h2>
+            <p>有用的写作有四个组成部分：</p><ol><li><strong>重要性</strong>：对多少人重要 × 对他们多重要。如果只有很少人关心，或者关心程度很低，那这篇文章就没用。</li></ol><ol><li><strong>新颖性</strong>：读者不知道但应该知道的。如果他们已经知道，你就是在浪费他们的时间。</li></ol><ol><li><strong>正确性</strong>：尽可能强但不变成假的。不要说"所有X都是Y"，如果"大多数X是Y"就够了。</li></ol><ol><li><strong>力度</strong>：清晰、简洁、直接地表达。去掉废话，用最直接的词。</li></ol><p><strong>Morris技巧</strong>：Robert Morris（PG的联合创始人）的秘诀是——不确定就不发表。你可以确保发表的每篇文章都是好的，方法就是只发表那些好的。</p><p><strong>限定词是重要的技能</strong>：不只是避免说错话，而是精确表达确定程度。"可能"、"往往"、"在某些情况下"——这些词让你的陈述更准确。</p><p><strong>先松后紧</strong>：快速写初稿，然后花数天仔细重写。重写是写作的本质。</p><p><strong>简单语言</strong>：错误在简单语言中更明显。如果一件事很难解释，可能你的想法还不够清晰。</p>
+        </section>
+        
+        <div class="section-label">个人思考</div>
+        <section id="notes" class="notes-section">
+            <h2>学习笔记</h2>
+            <p><strong>核心洞察：</strong></p><p>这篇文章提供了非常实用的写作框架。Morris技巧（不确定就不发表）和"先松后紧"的方法都很值得实践。</p><p><strong>最有力的段落：</strong></p><blockquote>"Useful writing tells people something true and important that they didn't already know, and tells them as unequivocally as possible."</blockquote><p>（有用的写作告诉人们一些他们不知道但真实且重要的事，并尽可能明确地告诉他们。）</p><blockquote>"You can't ensure that every idea you have is good, but you can ensure that every one you publish is, by simply not publishing the ones that aren't."</blockquote><p>（你无法确保每个想法都是好的，但你可以确保发表的每篇都是好的——方法就是只发表那些好的。）</p><p><strong>限定词作为技能而非负担的观点也很有启发。</strong></p><p><strong>个人反思：</strong></p><p>对于投资备忘录和项目分析，这个框架同样适用。一份好的投资备忘录应该：<br>- 重要：对投资决策有实质影响<br>- 新颖：提供市场尚未充分认知的洞察<br>- 正确：基于事实和逻辑，不过度推断<br>- 有力：清晰简洁，不绕弯子</p>
+        </section>
+    
+            </div>
+        </article>
+
+        <aside class="toc-sidebar">
+            <div class="toc-card">
+                <div class="toc-title">文章目录</div>
+                <ul class="toc-list" id="tocList">
+                    <li><a href="#original">核心观点</a></li>
+                    <li><a href="#notes">学习笔记</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>学习笔记 by <a href="https://www.frankmiao.top">Frank Miao</a></p>
+            <p>内容源自 <a href="http://paulgraham.com">paulgraham.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Active TOC link
+        const sections = document.querySelectorAll('.article-content h2[id]');
+        const tocLinks = document.querySelectorAll('.toc-list a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
