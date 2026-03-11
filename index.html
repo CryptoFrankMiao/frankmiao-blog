@@ -3,10 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PG Essays 中文站 - Paul Graham 学习笔记</title>
+    <title>Frank's Automatic Notes - Paul Graham 学习笔记</title>
+    <meta name="description" content="用 Open Claw 深入研读经典文章，提供完整中文翻译与个人学习笔记。正在学习 Paul Graham 的智慧">
+    <meta name="keywords" content="Paul Graham, PG Essays, 中文翻译, 学习笔记, 创业, 编程, 写作">
+    <meta name="author" content="Frank">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Frank's Automatic Notes - Paul Graham 学习笔记">
+    <meta property="og:description" content="用 Open Claw 深入研读经典文章，提供完整中文翻译与个人学习笔记。正在学习 Paul Graham 的智慧">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.frankmiao.top/">
+    <meta property="og:site_name" content="Frank's Automatic Notes">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Frank's Automatic Notes">
+    <meta name="twitter:description" content="用 Open Claw 深入研读经典文章，正在学习 Paul Graham 的智慧">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="PG Essays 中文站" href="/rss.xml">
     <style>
         :root {
             --bg-primary: #0a0a0a;
@@ -62,7 +82,7 @@
             background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 0;
+            padding: 1rem 2rem;
             position: fixed;
             top: 0;
             left: 0;
@@ -73,35 +93,34 @@
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
             color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            letter-spacing: -0.02em;
+            gap: 0.1rem;
         }
 
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--bg-primary);
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        .logo-bracket {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--accent);
+            opacity: 0.5;
+            line-height: 1;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            line-height: 1;
         }
 
         nav {
@@ -205,6 +224,117 @@
             letter-spacing: 0.05em;
         }
 
+        /* Search Section */
+        .search-section {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-shortcut {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-hover);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: inherit;
+        }
+
+        .search-input:focus + .search-shortcut,
+        .search-box:focus-within .search-shortcut {
+            display: none;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 2rem;
+        }
+
+        .filter-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--category-color, var(--accent));
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--category-color, var(--accent));
+            border-color: var(--category-color, var(--accent));
+            color: var(--bg-primary);
+        }
+
+        .filter-icon {
+            font-size: 0.9rem;
+        }
+
         /* Main Content */
         main {
             max-width: 1200px;
@@ -212,7 +342,6 @@
             padding: 2rem;
         }
 
-        /* Section Title */
         .section-header {
             display: flex;
             align-items: center;
@@ -237,78 +366,9 @@
             border-radius: 2px;
         }
 
-        /* Search & Filter */
-        .search-filter-bar {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 250px;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            font-family: inherit;
-            transition: all 0.2s;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .search-box input::placeholder {
+        .results-count {
             color: var(--text-muted);
-        }
-
-        .search-box::before {
-            content: '🔍';
-            position: absolute;
-            left: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
             font-size: 0.9rem;
-        }
-
-        .tag-filters {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 1rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .filter-btn:hover {
-            border-color: var(--accent);
-            color: var(--text-primary);
-        }
-
-        .filter-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: var(--bg-primary);
         }
 
         /* Article Grid */
@@ -316,10 +376,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
             gap: 1.5rem;
-        }
-
-        .article-card.hidden {
-            display: none;
         }
 
         .article-card {
@@ -340,6 +396,10 @@
             border-color: var(--border-light);
             transform: translateY(-4px);
             box-shadow: var(--shadow-hover);
+        }
+
+        .article-card.hidden {
+            display: none;
         }
 
         .card-header {
@@ -430,6 +490,18 @@
             gap: 0.5rem;
         }
 
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .no-results-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
         /* Footer */
         footer {
             background: var(--bg-secondary);
@@ -462,8 +534,12 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.25rem;
+            }
+
             .header-content {
-                padding: 0 1.25rem;
+                padding: 0;
             }
 
             nav {
@@ -498,6 +574,14 @@
                 font-size: 1.75rem;
             }
 
+            .search-section {
+                padding: 0 1.25rem;
+            }
+
+            .filter-section {
+                padding: 0 1.25rem;
+            }
+
             main {
                 padding: 1.5rem 1.25rem;
             }
@@ -511,6 +595,10 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 1rem;
+            }
+
+            .logo-text {
+                display: none;
             }
         }
 
@@ -526,10 +614,6 @@
             .stat-number {
                 font-size: 1.5rem;
             }
-
-            .logo-text {
-                display: none;
-            }
         }
     </style>
 </head>
@@ -539,27 +623,29 @@
     <header>
         <div class="header-content">
             <a href="/" class="logo">
-                <span class="logo-icon">PG</span>
-                <span class="logo-text">Essays 中文站</span>
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">F</span>
+                <span class="logo-bracket">]</span>
             </a>
             <nav>
                 <a href="/" class="active">文章列表</a>
+                <a href="/rss.xml">RSS</a>
             </nav>
         </div>
     </header>
 
     <section class="hero">
         <div class="hero-badge">正在学习 Paul Graham</div>
-        <h1>Paul Graham<br>Essays 中文站</h1>
-        <p>深入研读 Paul Graham 的经典文章，提供完整中文翻译与个人学习笔记。从创业哲学到编程语言，从写作技巧到财富创造。</p>
+        <h1>Frank's Automatic Notes</h1>
+        <p>用 Open Claw 深入研读经典文章，提供完整中文翻译与个人学习笔记。正在学习 Paul Graham 的智慧</p>
         <div class="hero-stats">
             <div class="stat">
-                <div class="stat-number">23</div>
+                <div class="stat-number" id="totalArticles">6</div>
                 <div class="stat-label">已读文章</div>
             </div>
             <div class="stat">
-                <div class="stat-number">46%</div>
-                <div class="stat-label">完成进度</div>
+                <div class="stat-number">19.1k</div>
+                <div class="stat-label">累计字数</div>
             </div>
             <div class="stat">
                 <div class="stat-number">5</div>
@@ -568,25 +654,104 @@
         </div>
     </section>
 
-    <main>
-        <div class="search-filter-bar">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="搜索文章...">
-            </div>
-            <div class="tag-filters">
-                <button class="filter-btn active" data-tag="all">全部</button>
-                <button class="filter-btn" data-tag="社会观察">社会观察</button><button class="filter-btn" data-tag="教育">教育</button><button class="filter-btn" data-tag="心理学">心理学</button><button class="filter-btn" data-tag="创业">创业</button><button class="filter-btn" data-tag="财富">财富</button><button class="filter-btn" data-tag="职业">职业</button>
-            </div>
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="search-box">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="text" class="search-input" id="searchInput" placeholder="搜索文章标题、内容...">
+            <kbd class="search-shortcut">/</kbd>
         </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="filter-title">按标签筛选</div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-category="all">全部</button><button class="filter-btn" data-category="创业" style="--category-color: #22c55e">
+            <span class="filter-icon">⬜</span>
+            创业
+        </button><button class="filter-btn" data-category="技术" style="--category-color: #3b82f6">
+            <span class="filter-icon">⬛</span>
+            技术
+        </button><button class="filter-btn" data-category="投资" style="--category-color: #eab308">
+            <span class="filter-icon">🟨</span>
+            投资
+        </button><button class="filter-btn" data-category="写作" style="--category-color: #a855f7">
+            <span class="filter-icon">🟪</span>
+            写作
+        </button><button class="filter-btn" data-category="社会" style="--category-color: #06b6d4">
+            <span class="filter-icon">🟦</span>
+            社会
+        </button>
+        </div>
+    </section>
+
+    <main>
         <div class="section-header">
             <h2 class="section-title">全部文章</h2>
+            <span class="results-count" id="resultsCount"></span>
         </div>
         <div class="article-grid" id="articleGrid">
             
-            <a href="/articles/why-nerds-are-unpopular.html" class="article-card" data-tags="社会观察,教育,心理学">
+            <a href="/articles/how-to-write-usefully.html" class="article-card" data-category="写作" data-tags="写作,方法论">
                 <div class="card-header">
-                    <div class="card-icon">📊</div>
-                    <span class="card-date">2026-03-09 · 10分钟阅读</span>
+                    <div class="card-icon" style="background: #a855f720; color: #a855f7;">🟪</div>
+                    <span class="card-date">2026-03-09</span>
+                </div>
+                <h3>如何写出有用的文章</h3>
+                <p class="excerpt">有用的写作 = 重要性 + 新颖性 + 正确性 + 力度。Morris技巧：不确定就不发表。</p>
+                <div class="card-footer">
+                    <div class="article-tags"><span class="tag">写作</span><span class="tag">方法论</span></div>
+                    <span class="read-more">阅读 →</span>
+                </div>
+            </a>
+        
+            <a href="/articles/putting-ideas-into-words.html" class="article-card" data-category="写作" data-tags="写作,思考,认知">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #a855f720; color: #a855f7;">🟪</div>
+                    <span class="card-date">2026-03-09</span>
+                </div>
+                <h3>将想法转化为文字</h3>
+                <p class="excerpt">写作是严格的测试，暴露想法的不精确和不完整。没有写过某个话题的人就没有完全形成关于它的想法。</p>
+                <div class="card-footer">
+                    <div class="article-tags"><span class="tag">写作</span><span class="tag">思考</span><span class="tag">认知</span></div>
+                    <span class="read-more">阅读 →</span>
+                </div>
+            </a>
+        
+            <a href="/articles/the-hundred-year-language.html" class="article-card" data-category="技术" data-tags="编程,技术,预测">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #3b82f620; color: #3b82f6;">⬛</div>
+                    <span class="card-date">2026-03-09</span>
+                </div>
+                <h3>百年语言</h3>
+                <p class="excerpt">预测100年后的编程语言，可以帮助我们现在的选择。语言像物种一样形成进化树，有死胡同和主干。Lisp走在正确的道路上。</p>
+                <div class="card-footer">
+                    <div class="article-tags"><span class="tag">编程</span><span class="tag">技术</span><span class="tag">预测</span></div>
+                    <span class="read-more">阅读 →</span>
+                </div>
+            </a>
+        
+            <a href="/articles/the-roots-of-lisp.html" class="article-card" data-category="技术" data-tags="编程,Lisp,历史">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #3b82f620; color: #3b82f6;">⬛</div>
+                    <span class="card-date">2026-03-09</span>
+                </div>
+                <h3>Lisp的根源</h3>
+                <p class="excerpt">McCarthy 1960年的论文展示了如何用少量简单操作构建完整的编程语言。Lisp的核心理念是用列表同时表示代码和数据。</p>
+                <div class="card-footer">
+                    <div class="article-tags"><span class="tag">编程</span><span class="tag">Lisp</span><span class="tag">历史</span></div>
+                    <span class="read-more">阅读 →</span>
+                </div>
+            </a>
+        
+            <a href="/articles/why-nerds-are-unpopular.html" class="article-card" data-category="社会" data-tags="社会观察,教育,心理学">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #06b6d420; color: #06b6d4;">🟦</div>
+                    <span class="card-date">2026-03-09</span>
                 </div>
                 <h3>为什么书呆子不受欢迎</h3>
                 <p class="excerpt">书呆子不受欢迎不是因为他们社交能力差，而是因为他们有更重要的事情要想。学校是一个人工环境，而书呆子已经在玩真实世界的游戏。</p>
@@ -596,10 +761,10 @@
                 </div>
             </a>
         
-            <a href="/articles/how-to-get-rich.html" class="article-card" data-tags="创业,财富,职业">
+            <a href="/articles/how-to-get-rich.html" class="article-card" data-category="创业" data-tags="创业,财富,职业">
                 <div class="card-header">
-                    <div class="card-icon">🚀</div>
-                    <span class="card-date">2026-03-08 · 2分钟阅读</span>
+                    <div class="card-icon" style="background: #22c55e20; color: #22c55e;">⬜</div>
+                    <span class="card-date">2026-03-08</span>
                 </div>
                 <h3>如何致富</h3>
                 <p class="excerpt">致富的关键是拥有股权，而不是靠工资。创业是获得股权最直接的方式，但不是唯一方式。</p>
@@ -609,6 +774,10 @@
                 </div>
             </a>
         
+        </div>
+        <div class="no-results" id="noResults" style="display: none;">
+            <div class="no-results-icon">🔍</div>
+            <p>没有找到匹配的文章</p>
         </div>
     </main>
 
@@ -629,42 +798,124 @@
 
         // Search functionality
         const searchInput = document.getElementById('searchInput');
-        const articleCards = document.querySelectorAll('.article-card');
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        let currentTag = 'all';
+        const articleGrid = document.getElementById('articleGrid');
+        const noResults = document.getElementById('noResults');
+        const resultsCount = document.getElementById('resultsCount');
+        const articles = document.querySelectorAll('.article-card');
+
+        function updateResultsCount() {
+            const visible = document.querySelectorAll('.article-card:not(.hidden)').length;
+            resultsCount.textContent = visible > 0 ? `共 ${visible} 篇文章` : '';
+        }
 
         searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            filterArticles(searchTerm, currentTag);
-        });
+            const query = e.target.value.toLowerCase();
+            let hasResults = false;
 
-        // Tag filter functionality
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentTag = btn.dataset.tag;
-                const searchTerm = searchInput.value.toLowerCase();
-                filterArticles(searchTerm, currentTag);
-            });
-        });
+            articles.forEach(article => {
+                const title = article.querySelector('h3').textContent.toLowerCase();
+                const excerpt = article.querySelector('.excerpt').textContent.toLowerCase();
+                const tags = article.dataset.tags.toLowerCase();
 
-        function filterArticles(searchTerm, tag) {
-            articleCards.forEach(card => {
-                const title = card.querySelector('h3').textContent.toLowerCase();
-                const excerpt = card.querySelector('.excerpt').textContent.toLowerCase();
-                const tags = card.dataset.tags.toLowerCase();
-                
-                const matchesSearch = title.includes(searchTerm) || excerpt.includes(searchTerm);
-                const matchesTag = tag === 'all' || tags.includes(tag.toLowerCase());
-                
-                if (matchesSearch && matchesTag) {
-                    card.classList.remove('hidden');
+                if (title.includes(query) || excerpt.includes(query) || tags.includes(query)) {
+                    article.classList.remove('hidden');
+                    hasResults = true;
                 } else {
-                    card.classList.add('hidden');
+                    article.classList.add('hidden');
                 }
             });
+
+            noResults.style.display = hasResults ? 'none' : 'block';
+            updateResultsCount();
+        });
+
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        let currentFilter = 'all';
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                currentFilter = btn.dataset.category;
+                applyFilters();
+            });
+        });
+
+        function applyFilters() {
+            const query = searchInput.value.toLowerCase();
+            let hasResults = false;
+
+            articles.forEach(article => {
+                const title = article.querySelector('h3').textContent.toLowerCase();
+                const excerpt = article.querySelector('.excerpt').textContent.toLowerCase();
+                const tags = article.dataset.tags.toLowerCase();
+                const category = article.dataset.category;
+                const matchesSearch = title.includes(query) || excerpt.includes(query) || tags.includes(query);
+                const matchesFilter = currentFilter === 'all' || category === currentFilter;
+
+                if (matchesSearch && matchesFilter) {
+                    article.classList.remove('hidden');
+                    hasResults = true;
+                } else {
+                    article.classList.add('hidden');
+                }
+            });
+
+            noResults.style.display = hasResults ? 'none' : 'block';
+            updateResultsCount();
         }
+
+        // Initialize
+        updateResultsCount();
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Press '/' to focus search
+            if (e.key === '/' && e.target.tagName !== 'INPUT') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+            // Press 'Escape' to clear search
+            if (e.key === 'Escape' && e.target === searchInput) {
+                searchInput.value = '';
+                searchInput.blur();
+                applyFilters();
+            }
+            // Press number keys 1-9 to filter by tag
+            if (e.key >= '1' && e.key <= '9' && !e.metaKey && !e.ctrlKey && e.target.tagName !== 'INPUT') {
+                const index = parseInt(e.key) - 1;
+                const buttons = Array.from(filterButtons);
+                if (buttons[index]) {
+                    buttons[index].click();
+                }
+            }
+        });
+
+        // Save and restore search state
+        const searchStorageKey = 'pg-essays-search';
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem(searchStorageKey, searchInput.value);
+            localStorage.setItem(`${searchStorageKey}-filter`, currentFilter);
+        });
+        window.addEventListener('load', () => {
+            const savedSearch = localStorage.getItem(searchStorageKey);
+            const savedFilter = localStorage.getItem(`${searchStorageKey}-filter`);
+            if (savedSearch) {
+                searchInput.value = savedSearch;
+            }
+            if (savedFilter) {
+                const btn = document.querySelector(`.filter-btn[data-tag="${savedFilter}"]`);
+                if (btn) {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = savedFilter;
+                }
+            }
+            applyFilters();
+        });
     </script>
 </body>
 </html>
