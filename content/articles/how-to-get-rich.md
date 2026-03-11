@@ -11,6 +11,10 @@ originalUrl: http://paulgraham.com/wealth.html
 
 ## 中文翻译
 
+如何致富 --> 2004年5月（本文改编自2004年在哈佛计算机协会的一次演讲。）
+
+当我还是个孩子时，我认为富人之所以富有是因为他们工作努力。这就是为什么他们这么有钱。这是成年人给我的解释，我没有理由怀疑它。然后我上了大学，开始了解风险投资，并遇到了一些富人。我开始意识到，富人和穷人之间的区别不是工作的努力程度。
+
 你通过拥有东西致富，而不是靠工资工作。工资有限；股权没有限制。
 
 创业是获得股权最直接的方式，但不是唯一方式。你可以作为早期员工加入早期创业公司，或通过投资获得股权。
@@ -25,27 +29,17 @@ originalUrl: http://paulgraham.com/wealth.html
 
 最终，财富来自于创造人们想要的东西，并以可扩展的方式交付。
 
+这就是致富的公式：创造人们想要的东西，以可扩展的方式交付，并从中获得股权。
+
 ## 英文原文
 
-You get rich by owning things, not by working for wages. Wages are limited; equity is not.
-
-Starting a company is the most direct way to get equity, but not the only way. You can join an early-stage startup as an early employee, or get equity through investing.
-
-Choose work that has compounding effects. Some jobs you do for 10 years are just repeating the first year's experience 10 times. Others make you much stronger every year. Choose the latter.
-
-Look for problems that have huge payoffs if you solve them right. Don't solve problems that are worth little even if solved perfectly.
-
-You need to become an expert in something, then use that expertise to solve valuable problems. Expertise is hard to get because it requires genuine interest and long-term commitment.
-
-Leverage matters. Code and media are new forms of leverage—they can be replicated infinitely at zero marginal cost.
-
-Ultimately, wealth comes from creating what people want and delivering it in a scalable way.
+[原文较长，已保存在 content/originals/how-to-get-rich.txt]
 
 ## 学习笔记
 
 **核心洞察：**
 
-这篇文章是PG关于财富创造的核心观点。关键不是"努力工作"，而是"拥有可扩展的东西"。
+致富的关键是拥有股权，而不是靠工资。创业是获得股权最直接的方式，但不是唯一方式。
 
 **最有力的观点：**
 
@@ -53,14 +47,6 @@ Ultimately, wealth comes from creating what people want and delivering it in a s
 
 （你通过拥有东西致富，而不是靠工资工作。）
 
-**四个关键要素：**
-1. **股权** - 拥有可增值的资产
-2. **杠杆** - 代码、媒体、资本、劳动力
-3. **专长** - 难以获得的独特技能
-4. **可扩展性** - 边际成本递减的交付方式
-
 **个人反思：**
 
-这对投资行业的人来说特别相关。作为投资人，你本质上是"杠杆化"自己的判断——用LP的钱去投资，分享收益。
-
-但PG的观点也提醒我们：真正的财富来自于创造价值，而不是仅仅转移价值。最好的投资是支持那些创造人们真正想要的东西的企业家。
+这对职业选择有重要启示：要寻找能提供股权或杠杆效应的机会，而不仅仅是高薪。

@@ -11,11 +11,13 @@ originalUrl: http://paulgraham.com/nerds.html
 
 ## 中文翻译
 
-当我们上初中时，我和朋友里奇制作了一张学校午餐桌的受欢迎程度地图。这很容易做到，因为孩子们只和受欢迎程度相近的人一起吃午饭。我们把它们从A到E分级。A桌坐满了橄榄球运动员和啦啦队员等。E桌则是患有轻度唐氏综合症的孩子，用当时的语言我们称之为"智障"。
+为什么书呆子不受欢迎 --> 2003年2月
+
+当我们上初中时，我和朋友里奇制作了一张学校午餐桌的受欢迎程度地图。这很容易做到，因为孩子们只和受欢迎程度相近的人一起吃午饭。我们把它们从A到E分级。A桌坐满了橄榄球运动员和啦啦队员等。E桌则是有轻度唐氏综合症的孩子，用当时的语言我们称之为"智障"。
 
 我们坐在D桌，这是在不看起来身体不同的情况下能坐到的最低等级。我们给自己打D分并不是特别坦率。如果说不是D，那就是故意撒谎。学校里每个人都知道其他人的受欢迎程度，包括我们。
 
-我认识很多在学校时是书呆子的人，他们都讲着同样的故事：聪明和书呆子之间有很强的正相关，而书呆子和受欢迎之间则有更强的负相关。聪明似乎会让你不受欢迎。
+我的股票在高中期间逐渐上涨。青春期终于来了；我成了一个不错的足球运动员；我创办了一份丑闻性的地下报纸。所以我见过受欢迎程度景观的很大一部分。我认识很多在学校时是书呆子的人，他们都讲着同样的故事：聪明和书呆子之间有很强的正相关，而书呆子和受欢迎之间则有更强的负相关。聪明似乎会让你不受欢迎。
 
 为什么？对于现在在学校的人来说，这可能是个奇怪的问题。这个事实如此压倒性，以至于想象它可能是其他样子似乎很奇怪。但它可能是。聪明不会让你在小学生涯中成为异类，也不一定会让你在高中成为异类。它也不会在现实世界中伤害你。据我所知，在大多数其他国家这个问题也不那么严重。但在典型的美国中学，聪明很可能会让你的生活变得困难。为什么？
 
@@ -35,7 +37,7 @@ originalUrl: http://paulgraham.com/nerds.html
 
 我想，这就是问题的根源。书呆子有两个主人。他们当然想受欢迎，但他们更想变聪明。而受欢迎不是你可以在业余时间做的事情，在美国中学这种竞争激烈的环境中不是。
 
-阿尔贝蒂，可以说是文艺复兴人的原型，写道"任何艺术，无论多么微小，如果你想在其中出类拔萃，都需要全身心的投入。"我想知道世界上是否有人比美国学童在受欢迎方面更努力工作。相比之下，海豹突击队和神经外科住院医师都显得懒散。他们偶尔休假；有些人甚至有爱好。一个美国青少年可能一年365天，每个醒着的小时都在努力受欢迎。
+阿尔贝蒂，可以说是文艺复兴人的原型，写道"任何艺术，无论多么微小，如果你想在其中出类拔萃，都需要全身心的投入。"我想知道世界上是否有人比美国学童在受欢迎方面更努力工作。海豹突击队和神经外科住院医师都显得懒散。他们偶尔休假；有些人甚至有爱好。美国青少年可能一年365天，每个醒着的小时都在努力受欢迎。
 
 我不是暗示他们有意识地这样做。他们中的一些人确实是小型的马基雅维利，但我这里真正想说的是，青少年作为从众者总是在值班。
 
@@ -69,67 +71,13 @@ originalUrl: http://paulgraham.com/nerds.html
 
 ## 英文原文
 
-When we were in junior high school, my friend Rich and I made a map of the school lunch tables according to popularity. This was easy to do, because kids only ate lunch with others of about the same popularity. We graded them from A to E. A tables were full of football players and cheerleaders and so on. E tables contained the kids with mild cases of Down's Syndrome, what in the language of the time we called "retards."
-
-We sat at a D table, as low as you could get without looking physically different. We were not being especially candid to grade ourselves as D. It would have taken a deliberate lie to say otherwise. Everyone in the school knew exactly how popular everyone else was, including us.
-
-I know a lot of people who were nerds in school, and they all tell the same story: there is a strong correlation between being smart and being a nerd, and an even stronger inverse correlation between being a nerd and being popular. Being smart seems to make you unpopular.
-
-Why? To someone in school now, that may seem an odd question to ask. The mere fact is so overwhelming that it may seem strange to imagine that it could be any other way. But it could. Being smart doesn't make you an outcast in elementary school, nor necessarily in high school. Nor does it harm you in the real world. Nor, as far as I can tell, is the problem so bad in most other countries. But in a typical American secondary school, being smart is likely to make your life difficult. Why?
-
-The key to this mystery is to rephrase the question slightly. Why don't smart kids make themselves popular? If they're so smart, why don't they figure out how popularity works and beat the system, just as they do for standardized tests?
-
-One argument says that this would be impossible, that the smart kids are unpopular because the other kids envy them for being smart, and nothing they could do could make them popular. I wish. If the other kids in junior high school envied me, they did a great job of concealing it. And in any case, if being smart were really an enviable quality, the girls would have broken ranks. The guys that guys envy, girls adore. Girls aren't attracted to the guys who are smart; they're attracted to the guys who are popular.
-
-So if intelligence in itself is not a factor in popularity, why are smart kids so consistently unpopular? The answer, I think, is that they don't really want to be popular.
-
-If someone had told me that at the time, I would have laughed at him. Being unpopular in school makes kids miserable, some of them so miserable that they commit suicide. Telling me that I didn't want to be popular would have seemed like telling someone dying of thirst in a desert that he didn't want a glass of water. Of course I wanted to be popular.
-
-But in fact I didn't, not enough. There was something else I wanted more: to be smart. Not simply to do well in school, though that counted for something, but to design beautiful rockets, or to write well, or to understand how to program computers. In general, to make great things.
-
-At the time I never tried to separate my wants and weigh them against one another. If I had, I would have seen that being smart was more important. If someone had offered me the chance to be the most popular kid in school, but only at the price of being of average intelligence (humor me here), I wouldn't have taken it.
-
-Much as they suffer from their unpopularity, I don't think many nerds would. To them the thought of average intelligence is unbearable. But most kids would take that deal. For half of them, it would be a step up. Even for someone in the eightieth percentile (assuming, as everyone seemed to then, that intelligence is a scalar), who wouldn't drop thirty points in exchange for being loved and admired by everyone?
-
-And that, I think, is the root of the problem. Nerds serve two masters. They want to be popular, certainly, but they want even more to be smart. And popularity is not something you can do in your spare time, not in the fiercely competitive environment of an American secondary school.
-
-Alberti, arguably the archetype of the Renaissance Man, writes that "no art, however minor, demands less than total dedication if you want to excel in it." I wonder if anyone in the world works harder at anything than American school kids work at popularity. Navy SEALs and neurosurgery residents seem slackers by comparison. They occasionally take vacations; some even have hobbies. An American teenager may work at being popular every waking hour, 365 days a year.
-
-I don't mean to suggest they do this consciously. Some of them truly are little Machiavellis, but what I really mean here is that teenagers are always on duty as conformists.
-
-For example, teenage kids pay a great deal of attention to clothes. They don't consciously dress to be popular. They dress to look good. But to who? To the other kids. Other kids' opinions become their definition of right, not just for clothes, but for almost everything they do, right down to the way they walk. And so every effort they make to do things "right" is also, consciously or not, an effort to be more popular.
-
-Nerds don't realize this. They don't realize that it takes work to be popular. In general, people outside some very demanding field don't realize the extent to which success depends on constant (though often unconscious) effort. For example, most people seem to consider the ability to draw as some kind of innate quality, like being tall. In fact, most people who "can draw" like drawing, and have spent many hours doing it; that's why they're good at it. Likewise, popular isn't just something you are or you aren't, but something you make yourself.
-
-The main reason nerds are unpopular is that they have other things to think about. Their attention is drawn to books or the natural world, not fashions and parties. They're like someone trying to play soccer while balancing a glass of water on his head. Other players who certainly notice and will exploit the situation will try to distract him, but he won't be able to pay attention to both the game and the glass. He's not being antisocial; he's just thinking about something more interesting than what other people are thinking about.
-
-Being smart seems to make you unpopular. But it's not the smartness itself; it's the fact that smartness is associated with having other, better things to think about. And that's why smart people's lives are worst between, say, the ages of eleven and seventeen. Life at that age revolves far more around popularity than before or after.
-
-Before that, kids' lives are dominated by their parents, not by other kids. Kids do care what their peers think in elementary school, but the social hierarchy is not as rigid or as all-consuming as it becomes later.
-
-Afterwards, it becomes less important. When you're an adult, you can choose to associate with people who think the way you do. But as a teenager, you're stuck in school, stuck with the same people year after year, and the social system is a zero-sum game. The only way to become more popular is to make someone else less popular.
-
-And the strange thing is, this nightmare scenario happens without any conscious malice, merely because of the shape of the situation. It's like the wave of a magic wand. What happened? Nothing happened. The situation just happened to be arranged that way.
-
-I think the important thing about the real world is not that it's populated by adults, but that it's very large, and the things you do have real effects. That's what school, prison, and ladies-who-lunch all lack. The inhabitants of all those worlds are trapped in small bubbles where nothing they do can have more than a local effect. Naturally these societies degenerate into savagery. They have no function for their form to follow.
-
-When the things you do have real effects, it's no longer enough just to be pleasing. It starts to be important to get the right answers, and that's where nerds show to advantage. Bill Gates will of course come to mind. Though notoriously lacking in social skills, he gets the right answers, at least as measured in revenue.
-
-The veteran may in turn feel a sense of noblesse oblige. And most importantly, their status depends on how well they do against opponents, not on whether they can push the other down. Court hierarchies are another thing entirely. This type of society debases anyone who enters it. There is neither admiration at the bottom, nor noblesse oblige at the top. It's kill or be killed.
-
-This is the sort of society that gets created in American secondary schools. And it is no coincidence. It is mainly because of the school's structure that it is so. Teenagers are not inherently unhappy monsters. That should be obvious to anyone who has spent time with them. But the school structure is deliberately designed to create a false sense of hierarchy and competition.
-
-Why? The stated purpose of schools is to educate the kids. But there is no external pressure to do this well. And so any school that is not deliberately designed to prevent it will inevitably end up being run primarily for the benefit of the administrators, not the students.
-
-The world of a teenager is a prison of artificial constraints. The social system is not a natural one that evolved over centuries, but a recently invented one that is run for the benefit of the people who invented it. And because the constraints are artificial, they are stifling.
-
-Nerds aren't losers. They're just playing a different game, and a game much closer to the one played in the real world.
+[原文较长，已保存在 content/originals/why-nerds-are-unpopular.txt]
 
 ## 学习笔记
 
 **核心洞察：**
 
-这篇文章解释了为什么很多"书呆子"在成年后反而成功——他们一直在思考真实世界的问题，而不是学校的社交游戏。
+书呆子不受欢迎不是因为他们社交能力差，而是因为他们有更重要的事情要想。学校是一个人工环境，而书呆子已经在玩真实世界的游戏。
 
 **最有力的观点：**
 
@@ -140,5 +88,3 @@ Nerds aren't losers. They're just playing a different game, and a game much clos
 **个人反思：**
 
 这也解释了为什么PG自己（和他认识的很多成功黑客）在学校都不受欢迎。他们一直在思考编程、创业和真实世界的问题，而不是如何在学校社交阶梯上爬升。
-
-这对投资者来说也有启发：不要被表面的社交能力迷惑，要看一个人是否在思考真正重要的问题。
