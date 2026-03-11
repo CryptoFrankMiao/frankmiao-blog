@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>为什么书呆子不受欢迎 - PG Essays 中文站</title>
+    <title>为什么书呆子不受欢迎 - Frank's Automatic Notes</title>
+    <meta name="description" content="Nerds aren't losers. They're just playing a different game. - 用 Open Claw 深入研读经典文章">
+    <meta name="keywords" content="Paul Graham, PG Essays, 中文翻译, 学习笔记, <span class="tag">社会观察</span><span class="tag">教育</span><span class="tag">心理学</span>">
+    <meta name="author" content="Frank">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="为什么书呆子不受欢迎 - Frank's Automatic Notes">
+    <meta property="og:description" content="Nerds aren't losers. They're just playing a different game.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.frankmiao.top/articles/why-nerds-are-unpopular.html">
+    <meta property="og:site_name" content="Frank's Automatic Notes">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="为什么书呆子不受欢迎 - Frank's Automatic Notes">
+    <meta name="twitter:description" content="Nerds aren't losers. They're just playing a different game.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,8 +82,8 @@
             background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 0;
-            position: fixed;
+            padding: 1rem 2rem;
+            position: sticky;
             top: 0;
             left: 0;
             right: 0;
@@ -74,35 +93,34 @@
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
             color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            letter-spacing: -0.02em;
+            gap: 0.1rem;
         }
 
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--bg-primary);
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        .logo-bracket {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--accent);
+            opacity: 0.5;
+            line-height: 1;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            line-height: 1;
         }
 
         .home-btn {
@@ -138,13 +156,14 @@
             gap: 4rem;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 6rem 2rem 4rem;
+            padding: 2rem 2rem 4rem;
         }
 
         /* Article Header */
         .article-header {
             margin-bottom: 3rem;
             padding-bottom: 2rem;
+            padding-top: 1rem;
             border-bottom: 1px solid var(--border);
         }
 
@@ -168,6 +187,7 @@
         .article-tags {
             display: flex;
             gap: 0.5rem;
+            margin-left: auto;
         }
 
         .tag {
@@ -219,6 +239,11 @@
         .article-content p {
             margin-bottom: 1.5rem;
             color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        .content-section p:last-child {
+            margin-bottom: 0;
         }
 
         .article-content ul, .article-content ol {
@@ -271,6 +296,35 @@
             padding: 0;
         }
 
+        /* Code highlighting */
+        .article-content .code-block {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .article-content .code-header {
+            background: var(--bg-hover);
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-content .code-header::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
         .article-content a {
             color: var(--accent);
             text-decoration: none;
@@ -295,6 +349,13 @@
             margin-bottom: 2rem;
             border-bottom: 1px solid var(--border);
             padding-bottom: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .tab-nav::-webkit-scrollbar {
+            display: none;
         }
 
         .tab-btn {
@@ -309,6 +370,8 @@
             margin-bottom: -1px;
             transition: all 0.2s;
             font-family: inherit;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .tab-btn:hover {
@@ -323,10 +386,16 @@
         /* Tab Content */
         .tab-content {
             display: none;
+            animation: fadeIn 0.3s ease;
         }
 
         .tab-content.active {
             display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Sections */
@@ -417,6 +486,7 @@
             padding-left: 1rem;
             margin-left: -1rem;
             transition: all 0.2s;
+            cursor: pointer;
         }
 
         .toc-list a:hover {
@@ -427,6 +497,75 @@
         .toc-list a.active {
             color: var(--accent);
             border-left-color: var(--accent);
+        }
+
+        /* Original Link */
+        .original-link {
+            margin-top: 2rem;
+            padding: 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .original-link svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .original-link a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .original-link a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        /* Share Buttons */
+        .share-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .share-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .share-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
         }
 
         /* Footer */
@@ -472,12 +611,16 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.25rem;
+            }
+
             .header-content {
-                padding: 0 1.25rem;
+                padding: 0;
             }
 
             .article-layout {
-                padding: 5rem 1.25rem 3rem;
+                padding: 1.5rem 1.25rem 3rem;
             }
 
             .article-header h1 {
@@ -500,17 +643,87 @@
                 font-size: 1.15rem;
             }
 
-            .tab-nav {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+            .article-tags {
+                margin-left: 0;
+                width: 100%;
+                margin-top: 0.5rem;
             }
 
-            .tab-btn {
-                white-space: nowrap;
+            .article-meta-top {
+                gap: 0.5rem;
             }
 
             .logo-text {
                 display: none;
+            }
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            color: var(--text-secondary);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        /* Print styles */
+        @media print {
+            header, .toc-sidebar, .share-section, .back-to-top, .progress-bar {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            .article-layout {
+                padding: 2rem;
+                grid-template-columns: 1fr;
+            }
+
+            .content-section {
+                background: white;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+
+            .tab-content {
+                display: block !important;
+            }
+
+            .tab-nav {
+                display: none;
+            }
+
+            a {
+                color: black;
+                text-decoration: underline;
             }
         }
     </style>
@@ -521,8 +734,9 @@
     <header>
         <div class="header-content">
             <a href="/" class="logo">
-                <span class="logo-icon">PG</span>
-                <span class="logo-text">Essays 中文站</span>
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">F</span>
+                <span class="logo-bracket">]</span>
             </a>
             <a href="/" class="home-btn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -540,12 +754,9 @@
                 <div class="article-meta-top">
                     <span class="article-date">2026-03-09</span>
                     <span class="article-meta-divider">·</span>
-                    <span class="article-read-time">10分钟阅读</span>
+                    <span class="article-read-time">42 分钟阅读</span>
                     <span class="article-meta-divider">·</span>
-                    <span class="article-word-count">4.5k字</span>
-                    <div class="article-tags">
-                        <span class="tag">社会观察</span><span class="tag">教育</span><span class="tag">心理学</span>
-                    </div>
+                    <span class="article-word-count">12.5k 字</span>
                 </div>
                 <h1>为什么书呆子不受欢迎</h1>
                 <p class="article-subtitle">Nerds aren't losers. They're just playing a different game.</p>
@@ -553,28 +764,25 @@
 
             <!-- Tab Navigation -->
             <div class="tab-nav">
-                <button class="tab-btn active" onclick="switchTab('translation')">中文翻译</button>
-                <button class="tab-btn" onclick="switchTab('original')">英文原文</button>
-                <button class="tab-btn" onclick="switchTab('notes')">学习笔记</button>
+                <button class="tab-btn active" data-tab="translation">中文翻译</button>
+                <button class="tab-btn" data-tab="original">英文原文</button>
+                <button class="tab-btn" data-tab="notes">学习笔记</button>
             </div>
 
             <div class="article-content">
                 
-        <!-- 中文翻译 Tab -->
         <div id="translation" class="tab-content active">
             <div class="content-section">
                 <p>当我们上初中时，我和朋友里奇制作了一张学校午餐桌的受欢迎程度地图。这很容易做到，因为孩子们只和受欢迎程度相近的人一起吃午饭。我们把它们从A到E分级。A桌坐满了橄榄球运动员和啦啦队员等。E桌则是患有轻度唐氏综合症的孩子，用当时的语言我们称之为"智障"。</p><p>我们坐在D桌，这是在不看起来身体不同的情况下能坐到的最低等级。我们给自己打D分并不是特别坦率。如果说不是D，那就是故意撒谎。学校里每个人都知道其他人的受欢迎程度，包括我们。</p><p>我认识很多在学校时是书呆子的人，他们都讲着同样的故事：聪明和书呆子之间有很强的正相关，而书呆子和受欢迎之间则有更强的负相关。聪明似乎会让你不受欢迎。</p><p>为什么？对于现在在学校的人来说，这可能是个奇怪的问题。这个事实如此压倒性，以至于想象它可能是其他样子似乎很奇怪。但它可能是。聪明不会让你在小学生涯中成为异类，也不一定会让你在高中成为异类。它也不会在现实世界中伤害你。据我所知，在大多数其他国家这个问题也不那么严重。但在典型的美国中学，聪明很可能会让你的生活变得困难。为什么？</p><p>解开这个谜团的关键是稍微改述一下问题。为什么聪明的孩子不让自己受欢迎？如果他们那么聪明，为什么不想办法弄清楚受欢迎的运作方式并击败这个系统，就像他们在标准化考试中做的那样？</p><p>有一种说法认为这是不可能的，聪明的孩子不受欢迎是因为其他孩子嫉妒他们聪明，而他们做什么都无法让自己受欢迎。我希望是这样。如果初中的其他孩子嫉妒我，他们掩饰得很好。无论如何，如果聪明真的是一种令人羡慕的品质，女孩们就会打破阵营。男人们嫉妒的男人，女孩们崇拜。女孩们不会被聪明的男人吸引；她们被受欢迎的男人吸引。</p><p>所以如果智力本身不是受欢迎的因素，为什么聪明的孩子总是不受欢迎？我想答案是，他们并不真的想受欢迎。</p><p>如果有人当时告诉我这一点，我会嘲笑他。在学校不受欢迎让孩子们痛苦，有些人痛苦到自杀。告诉我我不想受欢迎，就像告诉一个在沙漠中渴死的人他不想要一杯水一样。我当然想受欢迎。</p><p>但事实上我并不想，不够想。我有更想要的东西：变聪明。不仅仅是在学校表现好，虽然这也有点用，而是设计漂亮的火箭，或者写好文章，或者理解如何编程。总的来说，创造伟大的东西。</p><p>当时我从未试图区分我的欲望并权衡它们。如果我这样做了，我会发现聪明更重要。如果有人给我机会成为学校里最受欢迎的孩子，但代价是只有平均智商（这里迁就我一下），我不会接受。</p><p>尽管他们因不受欢迎而痛苦，我不认为很多书呆子会接受。对他们来说，平均智商的想法是不可忍受的。但大多数孩子会接受这个交易。对他们中的一半来说，这将是进步。即使对于处于第八十百分位的人（假设当时每个人都认为智力是标量），谁不会愿意下降三十分来换取被每个人爱和钦佩呢？</p><p>我想，这就是问题的根源。书呆子有两个主人。他们当然想受欢迎，但他们更想变聪明。而受欢迎不是你可以在业余时间做的事情，在美国中学这种竞争激烈的环境中不是。</p><p>阿尔贝蒂，可以说是文艺复兴人的原型，写道"任何艺术，无论多么微小，如果你想在其中出类拔萃，都需要全身心的投入。"我想知道世界上是否有人比美国学童在受欢迎方面更努力工作。相比之下，海豹突击队和神经外科住院医师都显得懒散。他们偶尔休假；有些人甚至有爱好。一个美国青少年可能一年365天，每个醒着的小时都在努力受欢迎。</p><p>我不是暗示他们有意识地这样做。他们中的一些人确实是小型的马基雅维利，但我这里真正想说的是，青少年作为从众者总是在值班。</p><p>例如，青少年孩子非常注意衣服。他们不是有意识地为了受欢迎而打扮。他们打扮是为了好看。但对谁好看？对其他孩子。其他孩子的意见成为他们对正确的定义，不仅仅是衣服，而是对他们做的几乎所有事情，一直到他们走路的方式。所以他们每次努力把事情做"对"，也是有意识地或无意识地努力变得更受欢迎。</p><p>书呆子没有意识到这一点。他们没有意识到受欢迎需要努力。一般来说，某些非常苛刻领域之外的人没有意识到成功在多大程度上取决于持续（虽然通常是无意识的）努力。例如，大多数人似乎认为绘画能力是某种先天品质，就像身高一样。事实上，大多数"会画画"的人喜欢画画，并花了很多小时做这件事；这就是他们擅长它的原因。同样，受欢迎不仅仅是你是不是，而是你自己创造的。</p><p>书呆子不受欢迎的主要原因是他们有其他事情要考虑。他们的注意力被吸引到书籍或自然世界，而不是时尚和派对。他们就像一个试图在头顶平衡一杯水的同时踢足球的人。其他肯定会注意到并利用这种情况的球员会试图分散他的注意力，但他无法同时注意比赛和杯子。他不是反社会；他只是对比别人想的事情更有趣的事情感兴趣。</p><p>聪明似乎会让你不受欢迎。但这不是聪明本身；而是聪明与有更好、更有趣的事情要考虑相关联。这就是为什么聪明人的生活最糟糕的时期大约在11到17岁之间。那个年龄的生活远比之前或之后更围绕受欢迎程度展开。</p><p>在那之前，孩子们的生活由他们的父母主导，而不是其他孩子。孩子们在小学确实在乎同龄人的想法，但社会等级制度不像后来那样僵化或全面。</p><p>之后，它变得不那么重要了。当你是成年人时，你可以选择与思维方式相同的人交往。但作为青少年，你被困在学校里，年复一年地和同样的人困在一起，社会系统是一个零和游戏。变得更受欢迎的唯一方法是让其他人变得不受欢迎。</p><p>奇怪的是，这个噩梦般的情景发生没有任何有意识的恶意，仅仅是因为情况的形状。就像魔杖一挥。发生了什么？什么都没发生。情况只是碰巧被安排成那样。</p><p>我认为现实世界的重要之处不是它由成年人组成，而是它非常大，你做的事情有真实的影响。这就是学校、监狱和午餐女士们所缺乏的。所有这些世界的居民都被困在小泡泡里，他们做的事情不可能有超过局部的影响。自然这些社会退化为野蛮。它们的形式没有功能可遵循。</p><p>当你做的事情有真实影响时，仅仅讨人喜欢就不够了。开始重要的是得到正确答案，这就是书呆子显示优势的地方。当然会想到比尔·盖茨。虽然 notoriously 缺乏社交技能，但他得到了正确答案，至少以收入衡量是这样。</p><p>老手反过来可能会感到一种贵族义务感。最重要的是，他们的地位取决于他们在与对手的竞争中表现如何，而不是他们是否能把别人推倒。宫廷等级制度完全是另一回事。这种类型的社会贬低了任何进入它的人。底部没有钦佩，顶部没有贵族义务。要么杀要么被杀。</p><p>这就是美国中学创造的社会类型。这并非巧合。主要是因为学校的结构才如此。青少年不是天生不快乐的小怪物。任何花时间和他们在一起的人都应该清楚这一点。但学校结构是故意设计来制造虚假的等级感和竞争感的。</p><p>为什么？学校的既定目的是教育孩子。但没有外部压力要做好这件事。因此任何不是故意设计来防止这种情况的学校最终都会不可避免地主要为管理者的利益而运作，而不是学生。</p><p>青少年的世界是一个人为约束的监狱。社会系统不是几个世纪演变而来的自然系统，而是最近发明的、为发明它的人的利益而运作的系统。而且因为约束是人为的，它们是令人窒息的。</p><p>书呆子不是失败者。他们只是在玩一个不同的游戏，一个更接近现实世界所玩的游戏。</p>
             </div>
         </div>
         
-        <!-- 英文原文 Tab -->
         <div id="original" class="tab-content">
             <div class="content-section">
                 <p>When we were in junior high school, my friend Rich and I made a map of the school lunch tables according to popularity. This was easy to do, because kids only ate lunch with others of about the same popularity. We graded them from A to E. A tables were full of football players and cheerleaders and so on. E tables contained the kids with mild cases of Down's Syndrome, what in the language of the time we called "retards."</p><p>We sat at a D table, as low as you could get without looking physically different. We were not being especially candid to grade ourselves as D. It would have taken a deliberate lie to say otherwise. Everyone in the school knew exactly how popular everyone else was, including us.</p><p>I know a lot of people who were nerds in school, and they all tell the same story: there is a strong correlation between being smart and being a nerd, and an even stronger inverse correlation between being a nerd and being popular. Being smart seems to make you unpopular.</p><p>Why? To someone in school now, that may seem an odd question to ask. The mere fact is so overwhelming that it may seem strange to imagine that it could be any other way. But it could. Being smart doesn't make you an outcast in elementary school, nor necessarily in high school. Nor does it harm you in the real world. Nor, as far as I can tell, is the problem so bad in most other countries. But in a typical American secondary school, being smart is likely to make your life difficult. Why?</p><p>The key to this mystery is to rephrase the question slightly. Why don't smart kids make themselves popular? If they're so smart, why don't they figure out how popularity works and beat the system, just as they do for standardized tests?</p><p>One argument says that this would be impossible, that the smart kids are unpopular because the other kids envy them for being smart, and nothing they could do could make them popular. I wish. If the other kids in junior high school envied me, they did a great job of concealing it. And in any case, if being smart were really an enviable quality, the girls would have broken ranks. The guys that guys envy, girls adore. Girls aren't attracted to the guys who are smart; they're attracted to the guys who are popular.</p><p>So if intelligence in itself is not a factor in popularity, why are smart kids so consistently unpopular? The answer, I think, is that they don't really want to be popular.</p><p>If someone had told me that at the time, I would have laughed at him. Being unpopular in school makes kids miserable, some of them so miserable that they commit suicide. Telling me that I didn't want to be popular would have seemed like telling someone dying of thirst in a desert that he didn't want a glass of water. Of course I wanted to be popular.</p><p>But in fact I didn't, not enough. There was something else I wanted more: to be smart. Not simply to do well in school, though that counted for something, but to design beautiful rockets, or to write well, or to understand how to program computers. In general, to make great things.</p><p>At the time I never tried to separate my wants and weigh them against one another. If I had, I would have seen that being smart was more important. If someone had offered me the chance to be the most popular kid in school, but only at the price of being of average intelligence (humor me here), I wouldn't have taken it.</p><p>Much as they suffer from their unpopularity, I don't think many nerds would. To them the thought of average intelligence is unbearable. But most kids would take that deal. For half of them, it would be a step up. Even for someone in the eightieth percentile (assuming, as everyone seemed to then, that intelligence is a scalar), who wouldn't drop thirty points in exchange for being loved and admired by everyone?</p><p>And that, I think, is the root of the problem. Nerds serve two masters. They want to be popular, certainly, but they want even more to be smart. And popularity is not something you can do in your spare time, not in the fiercely competitive environment of an American secondary school.</p><p>Alberti, arguably the archetype of the Renaissance Man, writes that "no art, however minor, demands less than total dedication if you want to excel in it." I wonder if anyone in the world works harder at anything than American school kids work at popularity. Navy SEALs and neurosurgery residents seem slackers by comparison. They occasionally take vacations; some even have hobbies. An American teenager may work at being popular every waking hour, 365 days a year.</p><p>I don't mean to suggest they do this consciously. Some of them truly are little Machiavellis, but what I really mean here is that teenagers are always on duty as conformists.</p><p>For example, teenage kids pay a great deal of attention to clothes. They don't consciously dress to be popular. They dress to look good. But to who? To the other kids. Other kids' opinions become their definition of right, not just for clothes, but for almost everything they do, right down to the way they walk. And so every effort they make to do things "right" is also, consciously or not, an effort to be more popular.</p><p>Nerds don't realize this. They don't realize that it takes work to be popular. In general, people outside some very demanding field don't realize the extent to which success depends on constant (though often unconscious) effort. For example, most people seem to consider the ability to draw as some kind of innate quality, like being tall. In fact, most people who "can draw" like drawing, and have spent many hours doing it; that's why they're good at it. Likewise, popular isn't just something you are or you aren't, but something you make yourself.</p><p>The main reason nerds are unpopular is that they have other things to think about. Their attention is drawn to books or the natural world, not fashions and parties. They're like someone trying to play soccer while balancing a glass of water on his head. Other players who certainly notice and will exploit the situation will try to distract him, but he won't be able to pay attention to both the game and the glass. He's not being antisocial; he's just thinking about something more interesting than what other people are thinking about.</p><p>Being smart seems to make you unpopular. But it's not the smartness itself; it's the fact that smartness is associated with having other, better things to think about. And that's why smart people's lives are worst between, say, the ages of eleven and seventeen. Life at that age revolves far more around popularity than before or after.</p><p>Before that, kids' lives are dominated by their parents, not by other kids. Kids do care what their peers think in elementary school, but the social hierarchy is not as rigid or as all-consuming as it becomes later.</p><p>Afterwards, it becomes less important. When you're an adult, you can choose to associate with people who think the way you do. But as a teenager, you're stuck in school, stuck with the same people year after year, and the social system is a zero-sum game. The only way to become more popular is to make someone else less popular.</p><p>And the strange thing is, this nightmare scenario happens without any conscious malice, merely because of the shape of the situation. It's like the wave of a magic wand. What happened? Nothing happened. The situation just happened to be arranged that way.</p><p>I think the important thing about the real world is not that it's populated by adults, but that it's very large, and the things you do have real effects. That's what school, prison, and ladies-who-lunch all lack. The inhabitants of all those worlds are trapped in small bubbles where nothing they do can have more than a local effect. Naturally these societies degenerate into savagery. They have no function for their form to follow.</p><p>When the things you do have real effects, it's no longer enough just to be pleasing. It starts to be important to get the right answers, and that's where nerds show to advantage. Bill Gates will of course come to mind. Though notoriously lacking in social skills, he gets the right answers, at least as measured in revenue.</p><p>The veteran may in turn feel a sense of noblesse oblige. And most importantly, their status depends on how well they do against opponents, not on whether they can push the other down. Court hierarchies are another thing entirely. This type of society debases anyone who enters it. There is neither admiration at the bottom, nor noblesse oblige at the top. It's kill or be killed.</p><p>This is the sort of society that gets created in American secondary schools. And it is no coincidence. It is mainly because of the school's structure that it is so. Teenagers are not inherently unhappy monsters. That should be obvious to anyone who has spent time with them. But the school structure is deliberately designed to create a false sense of hierarchy and competition.</p><p>Why? The stated purpose of schools is to educate the kids. But there is no external pressure to do this well. And so any school that is not deliberately designed to prevent it will inevitably end up being run primarily for the benefit of the administrators, not the students.</p><p>The world of a teenager is a prison of artificial constraints. The social system is not a natural one that evolved over centuries, but a recently invented one that is run for the benefit of the people who invented it. And because the constraints are artificial, they are stifling.</p><p>Nerds aren't losers. They're just playing a different game, and a game much closer to the one played in the real world.</p>
             </div>
         </div>
         
-        <!-- 学习笔记 Tab -->
         <div id="notes" class="tab-content">
             <div class="content-section" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, transparent 100%); border-left: 3px solid var(--accent);">
                 <p><strong>核心洞察：</strong></p><p>这篇文章解释了为什么很多"书呆子"在成年后反而成功——他们一直在思考真实世界的问题，而不是学校的社交游戏。</p><p><strong>最有力的观点：</strong></p><blockquote>"Nerds aren't losers. They're just playing a different game, and a game much closer to the one played in the real world."</blockquote><p>（书呆子不是失败者。他们只是在玩一个不同的游戏，一个更接近真实世界所玩的游戏。）</p><p><strong>个人反思：</strong></p><p>这也解释了为什么PG自己（和他认识的很多成功黑客）在学校都不受欢迎。他们一直在思考编程、创业和真实世界的问题，而不是如何在学校社交阶梯上爬升。</p><p>这对投资者来说也有启发：不要被表面的社交能力迷惑，要看一个人是否在思考真正重要的问题。</p>
@@ -582,15 +790,45 @@
         </div>
     
             </div>
+
+            <!-- Original Link -->
+            <div class="original-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span>原文：<a href="http://paulgraham.com/nerds.html" target="_blank" rel="noopener noreferrer">Why Nerds are Unpopular</a></span>
+            </div>
+
+            <!-- Share Section -->
+            <div class="share-section">
+                <div class="share-title">分享这篇文章</div>
+                <div class="share-buttons">
+                    <button class="share-btn" onclick="shareToTwitter()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        Twitter
+                    </button>
+                    <button class="share-btn" onclick="copyLink()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        </svg>
+                        复制链接
+                    </button>
+                </div>
+            </div>
         </article>
 
         <aside class="toc-sidebar">
             <div class="toc-card">
                 <div class="toc-title">文章目录</div>
                 <ul class="toc-list" id="tocList">
-                    <li><a href="#translation" class="active">中文翻译</a></li>
-                    <li><a href="#original">英文原文</a></li>
-                    <li><a href="#notes">学习笔记</a></li>
+                    <li><a data-tab="translation" class="active">中文翻译</a></li>
+                    <li><a data-tab="original">英文原文</a></li>
+                    <li><a data-tab="notes">学习笔记</a></li>
                 </ul>
             </div>
         </aside>
@@ -602,47 +840,148 @@
         </div>
     </footer>
 
+    <!-- Back to top button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="回到顶部">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
     <script>
-        // Progress bar
+        // Get article slug from URL
+        const articleSlug = window.location.pathname.split('/').pop().replace('.html', '');
+        const storageKey = `pg-essays-${articleSlug}`;
+
+        // Progress bar and back to top button
+        const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             document.getElementById('progressBar').style.width = scrolled + '%';
+
+            // Save scroll position
+            localStorage.setItem(`${storageKey}-scroll`, winScroll);
+
+            // Show/hide back to top button
+            if (winScroll > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
         });
 
-        // Tab switching
+        // Restore scroll position
+        window.addEventListener('load', () => {
+            const savedScroll = localStorage.getItem(`${storageKey}-scroll`);
+            if (savedScroll) {
+                window.scrollTo({ top: parseInt(savedScroll), behavior: 'instant' });
+            }
+        });
+
+        // Tab switching with localStorage
         function switchTab(tabName) {
             // Update buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
+                if (btn.dataset.tab === tabName) {
+                    btn.classList.add('active');
+                }
             });
-            event.target.classList.add('active');
 
             // Update content
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
-            document.getElementById(tabName).classList.add('active');
+            const targetContent = document.getElementById(tabName);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
 
             // Update TOC
             document.querySelectorAll('.toc-list a').forEach(link => {
                 link.classList.remove('active');
+                if (link.dataset.tab === tabName) {
+                    link.classList.add('active');
+                }
             });
-            document.querySelector(`.toc-list a[href="#${tabName}"]`).classList.add('active');
+
+            // Save tab preference
+            localStorage.setItem(`${storageKey}-tab`, tabName);
+
+            // Scroll to top of content
+            document.querySelector('.article-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // TOC active state
-        const tocLinks = document.querySelectorAll('.toc-list a');
-        tocLinks.forEach(link => {
+        // Restore saved tab on load
+        window.addEventListener('load', () => {
+            const savedTab = localStorage.getItem(`${storageKey}-tab`);
+            if (savedTab && document.getElementById(savedTab)) {
+                switchTab(savedTab);
+            }
+        });
+
+        // Bind tab buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchTab(btn.dataset.tab);
+            });
+        });
+
+        // Bind TOC links
+        document.querySelectorAll('.toc-list a').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const tabName = link.getAttribute('href').substring(1);
-                
-                // Trigger tab switch
-                const tabBtn = document.querySelector(`.tab-btn:nth-child(${tabName === 'translation' ? 1 : tabName === 'original' ? 2 : 3})`);
-                if (tabBtn) tabBtn.click();
+                switchTab(link.dataset.tab);
             });
+        });
+
+        // Share functions
+        function shareToTwitter() {
+            const text = encodeURIComponent(document.title);
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = event.target.closest('.share-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 已复制';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Cmd/Ctrl + 1/2/3 to switch tabs
+            if ((e.metaKey || e.ctrlKey) && e.key >= '1' && e.key <= '3') {
+                e.preventDefault();
+                const tabs = ['translation', 'original', 'notes'];
+                switchTab(tabs[parseInt(e.key) - 1]);
+            }
+            // Press 'h' to go home
+            if (e.key === 'h' && !e.metaKey && !e.ctrlKey && e.target.tagName !== 'INPUT') {
+                window.location.href = '/';
+            }
+        });
+
+        // Lazy load images
+        document.addEventListener('DOMContentLoaded', () => {
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+            images.forEach(img => imageObserver.observe(img));
         });
     </script>
 </body>

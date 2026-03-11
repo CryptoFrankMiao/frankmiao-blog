@@ -1,56 +1,34 @@
-# PG Essays 中文站
+# Frank's Automatic Notes
 
-Paul Graham 文章中文翻译与学习笔记
+用 Open Claw 深入研读经典文章，提供完整中文翻译与个人学习笔记。
+正在学习 Paul Graham 的智慧。
 
-## 项目结构
+## 网站
 
-```
-.
-├── content/           # 文章内容（Markdown 格式）
-│   └── articles/     # 文章文件
-├── template/         # HTML 模板
-├── dist/            # 构建输出
-├── build.js         # 构建脚本
-└── README.md
-```
+https://www.frankmiao.top
 
-## 内容管理
+## 本地开发
 
-文章存储在 `content/articles/` 目录下，使用 Markdown 格式。
-
-### 文章格式
-
-```markdown
----
-slug: article-url-slug
-title: English Title
-titleZh: 中文标题
-subtitle: 英文副标题
-date: 2026-03-10
-tags: [标签1, 标签2]
-excerpt: 文章摘要
----
-
-## 中文翻译
-
-中文内容...
-
-## 英文原文
-
-English content...
-
-## 学习笔记
-
-个人思考...
+```bash
+npm install
+npm run build
 ```
 
-## 自动部署
+## 部署
 
-推送到 main 分支后，GitHub Actions 会自动构建并部署到 Cloudflare Pages。
+自动部署到 GitHub Pages 和 Cloudflare Pages。
 
-## 添加新文章
+## 文章结构
 
-1. 在 `content/articles/` 创建新的 `.md` 文件
-2. 按照上述格式填写 front matter
-3. 提交并推送到 GitHub
-4. 自动构建部署
+文章使用 Markdown 格式，放在 `content/articles/` 目录下。
+
+每个文章包含：
+- 中文翻译
+- 英文原文
+- 学习笔记
+
+## 技术栈
+
+- Node.js
+- 纯静态 HTML/CSS/JS
+- GitHub Actions 自动部署

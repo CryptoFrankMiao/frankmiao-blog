@@ -6,6 +6,7 @@ subtitle: Nerds aren't losers. They're just playing a different game.
 date: 2026-03-09
 tags: [社会观察, 教育, 心理学]
 excerpt: 书呆子不受欢迎不是因为他们社交能力差，而是因为他们有更重要的事情要想。学校是一个人工环境，而书呆子已经在玩真实世界的游戏。
+originalUrl: http://paulgraham.com/nerds.html
 ---
 
 ## 中文翻译

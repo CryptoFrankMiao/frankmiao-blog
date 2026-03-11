@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PG Essays 中文站</title>
+    <link>https://www.frankmiao.top</link>
+    <description>Paul Graham 文章中文翻译与学习笔记</description>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 11 Mar 2026 02:09:53 GMT</lastBuildDate>
+    <atom:link href="https://www.frankmiao.top/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何写出有用的文章</title>
+      <link>https://www.frankmiao.top/articles/how-to-write-usefully.html</link>
+      <description>有用的写作 = 重要性 + 新颖性 + 正确性 + 力度。Morris技巧：不确定就不发表。</description>
+      <pubDate>Mon, 09 Mar 2026 00:00:00 GMT</pubDate>
+      <guid>https://www.frankmiao.top/articles/how-to-write-usefully.html</guid>
+    </item>
+    <item>
+      <title>将想法转化为文字</title>
+      <link>https://www.frankmiao.top/articles/putting-ideas-into-words.html</link>
+      <description>写作是严格的测试，暴露想法的不精确和不完整。没有写过某个话题的人就没有完全形成关于它的想法。</description>
+      <pubDate>Mon, 09 Mar 2026 00:00:00 GMT</pubDate>
+      <guid>https://www.frankmiao.top/articles/putting-ideas-into-words.html</guid>
+    </item>
+    <item>
+      <title>百年语言</title>
+      <link>https://www.frankmiao.top/articles/the-hundred-year-language.html</link>
+      <description>预测100年后的编程语言，可以帮助我们现在的选择。语言像物种一样形成进化树，有死胡同和主干。Lisp走在正确的道路上。</description>
+      <pubDate>Mon, 09 Mar 2026 00:00:00 GMT</pubDate>
+      <guid>https://www.frankmiao.top/articles/the-hundred-year-language.html</guid>
+    </item>
+    <item>
+      <title>Lisp的根源</title>
+      <link>https://www.frankmiao.top/articles/the-roots-of-lisp.html</link>
+      <description>McCarthy 1960年的论文展示了如何用少量简单操作构建完整的编程语言。Lisp的核心理念是用列表同时表示代码和数据。</description>
+      <pubDate>Mon, 09 Mar 2026 00:00:00 GMT</pubDate>
+      <guid>https://www.frankmiao.top/articles/the-roots-of-lisp.html</guid>
+    </item>
+    <item>
+      <title>为什么书呆子不受欢迎</title>
+      <link>https://www.frankmiao.top/articles/why-nerds-are-unpopular.html</link>
+      <description>书呆子不受欢迎不是因为他们社交能力差，而是因为他们有更重要的事情要想。学校是一个人工环境，而书呆子已经在玩真实世界的游戏。</description>
+      <pubDate>Mon, 09 Mar 2026 00:00:00 GMT</pubDate>
+      <guid>https://www.frankmiao.top/articles/why-nerds-are-unpopular.html</guid>
+    </item>
+    <item>
+      <title>如何致富</title>
+      <link>https://www.frankmiao.top/articles/how-to-get-rich.html</link>
+      <description>致富的关键是拥有股权，而不是靠工资。创业是获得股权最直接的方式，但不是唯一方式。</description>
+      <pubDate>Sun, 08 Mar 2026 00:00:00 GMT</pubDate>
+      <guid>https://www.frankmiao.top/articles/how-to-get-rich.html</guid>
+    </item>
+  </channel>
+</rss>

@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{TITLE}} - PG Essays 中文站</title>
+    <title>{{TITLE}} - Frank's Automatic Notes</title>
+    <meta name="description" content="{{SUBTITLE}} - 用 Open Claw 深入研读经典文章">
+    <meta name="keywords" content="Paul Graham, PG Essays, 中文翻译, 学习笔记, {{TAGS}}">
+    <meta name="author" content="Frank">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{TITLE}} - Frank's Automatic Notes">
+    <meta property="og:description" content="{{SUBTITLE}}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.frankmiao.top/articles/{{SLUG}}.html">
+    <meta property="og:site_name" content="Frank's Automatic Notes">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{TITLE}} - Frank's Automatic Notes">
+    <meta name="twitter:description" content="{{SUBTITLE}}">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -63,8 +82,8 @@
             background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 0;
-            position: fixed;
+            padding: 1rem 2rem;
+            position: sticky;
             top: 0;
             left: 0;
             right: 0;
@@ -74,35 +93,34 @@
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
             color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            letter-spacing: -0.02em;
+            gap: 0.1rem;
         }
 
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--bg-primary);
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        .logo-bracket {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--accent);
+            opacity: 0.5;
+            line-height: 1;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            line-height: 1;
         }
 
         .home-btn {
@@ -138,13 +156,14 @@
             gap: 4rem;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 6rem 2rem 4rem;
+            padding: 2rem 2rem 4rem;
         }
 
         /* Article Header */
         .article-header {
             margin-bottom: 3rem;
             padding-bottom: 2rem;
+            padding-top: 1rem;
             border-bottom: 1px solid var(--border);
         }
 
@@ -168,6 +187,7 @@
         .article-tags {
             display: flex;
             gap: 0.5rem;
+            margin-left: auto;
         }
 
         .tag {
@@ -219,6 +239,11 @@
         .article-content p {
             margin-bottom: 1.5rem;
             color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        .content-section p:last-child {
+            margin-bottom: 0;
         }
 
         .article-content ul, .article-content ol {
@@ -271,6 +296,35 @@
             padding: 0;
         }
 
+        /* Code highlighting */
+        .article-content .code-block {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .article-content .code-header {
+            background: var(--bg-hover);
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-content .code-header::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
         .article-content a {
             color: var(--accent);
             text-decoration: none;
@@ -295,6 +349,13 @@
             margin-bottom: 2rem;
             border-bottom: 1px solid var(--border);
             padding-bottom: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .tab-nav::-webkit-scrollbar {
+            display: none;
         }
 
         .tab-btn {
@@ -309,6 +370,8 @@
             margin-bottom: -1px;
             transition: all 0.2s;
             font-family: inherit;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .tab-btn:hover {
@@ -323,10 +386,16 @@
         /* Tab Content */
         .tab-content {
             display: none;
+            animation: fadeIn 0.3s ease;
         }
 
         .tab-content.active {
             display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Sections */
@@ -417,6 +486,7 @@
             padding-left: 1rem;
             margin-left: -1rem;
             transition: all 0.2s;
+            cursor: pointer;
         }
 
         .toc-list a:hover {
@@ -427,6 +497,75 @@
         .toc-list a.active {
             color: var(--accent);
             border-left-color: var(--accent);
+        }
+
+        /* Original Link */
+        .original-link {
+            margin-top: 2rem;
+            padding: 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .original-link svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .original-link a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .original-link a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        /* Share Buttons */
+        .share-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .share-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .share-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
         }
 
         /* Footer */
@@ -472,12 +611,16 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.25rem;
+            }
+
             .header-content {
-                padding: 0 1.25rem;
+                padding: 0;
             }
 
             .article-layout {
-                padding: 5rem 1.25rem 3rem;
+                padding: 1.5rem 1.25rem 3rem;
             }
 
             .article-header h1 {
@@ -500,17 +643,87 @@
                 font-size: 1.15rem;
             }
 
-            .tab-nav {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
+            .article-tags {
+                margin-left: 0;
+                width: 100%;
+                margin-top: 0.5rem;
             }
 
-            .tab-btn {
-                white-space: nowrap;
+            .article-meta-top {
+                gap: 0.5rem;
             }
 
             .logo-text {
                 display: none;
+            }
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            color: var(--text-secondary);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        /* Print styles */
+        @media print {
+            header, .toc-sidebar, .share-section, .back-to-top, .progress-bar {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            .article-layout {
+                padding: 2rem;
+                grid-template-columns: 1fr;
+            }
+
+            .content-section {
+                background: white;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+
+            .tab-content {
+                display: block !important;
+            }
+
+            .tab-nav {
+                display: none;
+            }
+
+            a {
+                color: black;
+                text-decoration: underline;
             }
         }
     </style>
@@ -521,8 +734,9 @@
     <header>
         <div class="header-content">
             <a href="/" class="logo">
-                <span class="logo-icon">PG</span>
-                <span class="logo-text">Essays 中文站</span>
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">F</span>
+                <span class="logo-bracket">]</span>
             </a>
             <a href="/" class="home-btn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -540,12 +754,9 @@
                 <div class="article-meta-top">
                     <span class="article-date">{{DATE}}</span>
                     <span class="article-meta-divider">·</span>
-                    <span class="article-read-time">{{READ_TIME}}分钟阅读</span>
+                    <span class="article-read-time">{{READ_TIME}} 分钟阅读</span>
                     <span class="article-meta-divider">·</span>
-                    <span class="article-word-count">{{WORD_COUNT}}字</span>
-                    <div class="article-tags">
-                        {{TAGS}}
-                    </div>
+                    <span class="article-word-count">{{WORD_COUNT}} 字</span>
                 </div>
                 <h1>{{TITLE}}</h1>
                 <p class="article-subtitle">{{SUBTITLE}}</p>
@@ -553,13 +764,43 @@
 
             <!-- Tab Navigation -->
             <div class="tab-nav">
-                <button class="tab-btn active" onclick="switchTab('translation')">中文翻译</button>
-                <button class="tab-btn" onclick="switchTab('original')">英文原文</button>
-                <button class="tab-btn" onclick="switchTab('notes')">学习笔记</button>
+                <button class="tab-btn active" data-tab="translation">中文翻译</button>
+                <button class="tab-btn" data-tab="original">英文原文</button>
+                <button class="tab-btn" data-tab="notes">学习笔记</button>
             </div>
 
             <div class="article-content">
                 {{CONTENT}}
+            </div>
+
+            <!-- Original Link -->
+            <div class="original-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span>原文：<a href="{{ORIGINAL_URL}}" target="_blank" rel="noopener noreferrer">{{TITLE_EN}}</a></span>
+            </div>
+
+            <!-- Share Section -->
+            <div class="share-section">
+                <div class="share-title">分享这篇文章</div>
+                <div class="share-buttons">
+                    <button class="share-btn" onclick="shareToTwitter()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        Twitter
+                    </button>
+                    <button class="share-btn" onclick="copyLink()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        </svg>
+                        复制链接
+                    </button>
+                </div>
             </div>
         </article>
 
@@ -567,9 +808,9 @@
             <div class="toc-card">
                 <div class="toc-title">文章目录</div>
                 <ul class="toc-list" id="tocList">
-                    <li><a href="#translation" class="active">中文翻译</a></li>
-                    <li><a href="#original">英文原文</a></li>
-                    <li><a href="#notes">学习笔记</a></li>
+                    <li><a data-tab="translation" class="active">中文翻译</a></li>
+                    <li><a data-tab="original">英文原文</a></li>
+                    <li><a data-tab="notes">学习笔记</a></li>
                 </ul>
             </div>
         </aside>
@@ -581,47 +822,148 @@
         </div>
     </footer>
 
+    <!-- Back to top button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="回到顶部">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
     <script>
-        // Progress bar
+        // Get article slug from URL
+        const articleSlug = window.location.pathname.split('/').pop().replace('.html', '');
+        const storageKey = `pg-essays-${articleSlug}`;
+
+        // Progress bar and back to top button
+        const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             document.getElementById('progressBar').style.width = scrolled + '%';
+
+            // Save scroll position
+            localStorage.setItem(`${storageKey}-scroll`, winScroll);
+
+            // Show/hide back to top button
+            if (winScroll > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
         });
 
-        // Tab switching
+        // Restore scroll position
+        window.addEventListener('load', () => {
+            const savedScroll = localStorage.getItem(`${storageKey}-scroll`);
+            if (savedScroll) {
+                window.scrollTo({ top: parseInt(savedScroll), behavior: 'instant' });
+            }
+        });
+
+        // Tab switching with localStorage
         function switchTab(tabName) {
             // Update buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
+                if (btn.dataset.tab === tabName) {
+                    btn.classList.add('active');
+                }
             });
-            event.target.classList.add('active');
 
             // Update content
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
-            document.getElementById(tabName).classList.add('active');
+            const targetContent = document.getElementById(tabName);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
 
             // Update TOC
             document.querySelectorAll('.toc-list a').forEach(link => {
                 link.classList.remove('active');
+                if (link.dataset.tab === tabName) {
+                    link.classList.add('active');
+                }
             });
-            document.querySelector(`.toc-list a[href="#${tabName}"]`).classList.add('active');
+
+            // Save tab preference
+            localStorage.setItem(`${storageKey}-tab`, tabName);
+
+            // Scroll to top of content
+            document.querySelector('.article-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // TOC active state
-        const tocLinks = document.querySelectorAll('.toc-list a');
-        tocLinks.forEach(link => {
+        // Restore saved tab on load
+        window.addEventListener('load', () => {
+            const savedTab = localStorage.getItem(`${storageKey}-tab`);
+            if (savedTab && document.getElementById(savedTab)) {
+                switchTab(savedTab);
+            }
+        });
+
+        // Bind tab buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchTab(btn.dataset.tab);
+            });
+        });
+
+        // Bind TOC links
+        document.querySelectorAll('.toc-list a').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const tabName = link.getAttribute('href').substring(1);
-                
-                // Trigger tab switch
-                const tabBtn = document.querySelector(`.tab-btn:nth-child(${tabName === 'translation' ? 1 : tabName === 'original' ? 2 : 3})`);
-                if (tabBtn) tabBtn.click();
+                switchTab(link.dataset.tab);
             });
+        });
+
+        // Share functions
+        function shareToTwitter() {
+            const text = encodeURIComponent(document.title);
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = event.target.closest('.share-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 已复制';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Cmd/Ctrl + 1/2/3 to switch tabs
+            if ((e.metaKey || e.ctrlKey) && e.key >= '1' && e.key <= '3') {
+                e.preventDefault();
+                const tabs = ['translation', 'original', 'notes'];
+                switchTab(tabs[parseInt(e.key) - 1]);
+            }
+            // Press 'h' to go home
+            if (e.key === 'h' && !e.metaKey && !e.ctrlKey && e.target.tagName !== 'INPUT') {
+                window.location.href = '/';
+            }
+        });
+
+        // Lazy load images
+        document.addEventListener('DOMContentLoaded', () => {
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+            images.forEach(img => imageObserver.observe(img));
         });
     </script>
 </body>

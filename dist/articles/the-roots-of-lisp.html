@@ -3,10 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lisp的根源 - Frank Miao</title>
+    <title>Lisp的根源 - Frank's Automatic Notes</title>
+    <meta name="description" content="McCarthy's 1960 paper showed how to build a complete programming language from a handful of simple operators. - 用 Open Claw 深入研读经典文章">
+    <meta name="keywords" content="Paul Graham, PG Essays, 中文翻译, 学习笔记, <span class="tag">编程</span><span class="tag">Lisp</span><span class="tag">历史</span>">
+    <meta name="author" content="Frank">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Lisp的根源 - Frank's Automatic Notes">
+    <meta property="og:description" content="McCarthy's 1960 paper showed how to build a complete programming language from a handful of simple operators.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.frankmiao.top/articles/the-roots-of-lisp.html">
+    <meta property="og:site_name" content="Frank's Automatic Notes">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Lisp的根源 - Frank's Automatic Notes">
+    <meta name="twitter:description" content="McCarthy's 1960 paper showed how to build a complete programming language from a handful of simple operators.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #0a0a0a;
@@ -38,11 +57,11 @@
         }
 
         body {
-            font-family: 'Noto Serif SC', 'Georgia', serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.8;
-            font-size: 17px;
+            font-size: 16px;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -60,11 +79,11 @@
 
         /* Header */
         header {
-            background: rgba(10, 10, 10, 0.8);
+            background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 0;
-            position: fixed;
+            padding: 1rem 2rem;
+            position: sticky;
             top: 0;
             left: 0;
             right: 0;
@@ -74,51 +93,60 @@
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 700;
             color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            letter-spacing: -0.02em;
+            gap: 0.1rem;
         }
 
-        .logo-icon {
-            width: 28px;
-            height: 28px;
-            background: var(--accent);
-            border-radius: 6px;
+        .logo-bracket {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--accent);
+            opacity: 0.5;
+            line-height: 1;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+
+        .home-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: var(--bg-primary);
-            font-weight: 700;
-        }
-
-        .back-link {
+            gap: 0.5rem;
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: color 0.2s;
-            font-family: 'Inter', sans-serif;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
         }
 
-        .back-link:hover {
-            color: var(--accent);
+        .home-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent);
+            background: var(--bg-hover);
+        }
+
+        .home-btn svg {
+            width: 16px;
+            height: 16px;
         }
 
         /* Layout */
@@ -128,30 +156,38 @@
             gap: 4rem;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 6rem 2rem 4rem;
+            padding: 2rem 2rem 4rem;
         }
 
         /* Article Header */
         .article-header {
             margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            padding-top: 1rem;
+            border-bottom: 1px solid var(--border);
         }
 
         .article-meta-top {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
             margin-bottom: 1.5rem;
-            font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
+            flex-wrap: wrap;
         }
 
-        .article-date {
+        .article-date, .article-read-time, .article-word-count {
             color: var(--text-muted);
+        }
+
+        .article-meta-divider {
+            color: var(--border-light);
         }
 
         .article-tags {
             display: flex;
             gap: 0.5rem;
+            margin-left: auto;
         }
 
         .tag {
@@ -175,7 +211,6 @@
         .article-subtitle {
             font-size: 1.15rem;
             color: var(--text-secondary);
-            font-family: 'Inter', sans-serif;
             font-weight: 400;
         }
 
@@ -187,7 +222,7 @@
         .article-content h2 {
             font-size: 1.5rem;
             font-weight: 600;
-            margin: 2.5rem 0 1rem;
+            margin: 3rem 0 1.25rem;
             color: var(--text-primary);
             letter-spacing: -0.01em;
             scroll-margin-top: 100px;
@@ -204,6 +239,11 @@
         .article-content p {
             margin-bottom: 1.5rem;
             color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        .content-section p:last-child {
+            margin-bottom: 0;
         }
 
         .article-content ul, .article-content ol {
@@ -233,7 +273,7 @@
         }
 
         .article-content code {
-            font-family: 'Fira Code', monospace;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
             background: var(--bg-code);
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
@@ -256,6 +296,35 @@
             padding: 0;
         }
 
+        /* Code highlighting */
+        .article-content .code-block {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .article-content .code-header {
+            background: var(--bg-hover);
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-content .code-header::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
         .article-content a {
             color: var(--accent);
             text-decoration: none;
@@ -273,12 +342,67 @@
             margin: 3rem 0;
         }
 
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .tab-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: all 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-secondary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Sections */
         .section-label {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            font-family: 'Inter', sans-serif;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -295,7 +419,7 @@
             border-radius: 2px;
         }
 
-        .original-section {
+        .content-section {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
@@ -303,22 +427,8 @@
             margin: 2rem 0;
         }
 
-        .original-section h2 {
+        .content-section h2 {
             margin-top: 0;
-        }
-
-        .notes-section {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, transparent 100%);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--accent);
-            border-radius: 0 var(--radius) var(--radius) 0;
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .notes-section h2 {
-            margin-top: 0;
-            color: var(--accent);
         }
 
         /* Table of Contents Sidebar */
@@ -336,7 +446,6 @@
         }
 
         .toc-title {
-            font-family: 'Inter', sans-serif;
             font-size: 0.8rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -377,6 +486,7 @@
             padding-left: 1rem;
             margin-left: -1rem;
             transition: all 0.2s;
+            cursor: pointer;
         }
 
         .toc-list a:hover {
@@ -387,6 +497,75 @@
         .toc-list a.active {
             color: var(--accent);
             border-left-color: var(--accent);
+        }
+
+        /* Original Link */
+        .original-link {
+            margin-top: 2rem;
+            padding: 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .original-link svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .original-link a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .original-link a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        /* Share Buttons */
+        .share-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .share-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .share-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
         }
 
         /* Footer */
@@ -432,12 +611,16 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.25rem;
+            }
+
             .header-content {
-                padding: 0 1.25rem;
+                padding: 0;
             }
 
             .article-layout {
-                padding: 5rem 1.25rem 3rem;
+                padding: 1.5rem 1.25rem 3rem;
             }
 
             .article-header h1 {
@@ -448,8 +631,7 @@
                 font-size: 1rem;
             }
 
-            .original-section,
-            .notes-section {
+            .content-section {
                 padding: 1.5rem;
             }
 
@@ -460,6 +642,89 @@
             .article-content h3 {
                 font-size: 1.15rem;
             }
+
+            .article-tags {
+                margin-left: 0;
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+
+            .article-meta-top {
+                gap: 0.5rem;
+            }
+
+            .logo-text {
+                display: none;
+            }
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            color: var(--text-secondary);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        /* Print styles */
+        @media print {
+            header, .toc-sidebar, .share-section, .back-to-top, .progress-bar {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                color: black;
+            }
+
+            .article-layout {
+                padding: 2rem;
+                grid-template-columns: 1fr;
+            }
+
+            .content-section {
+                background: white;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+
+            .tab-content {
+                display: block !important;
+            }
+
+            .tab-nav {
+                display: none;
+            }
+
+            a {
+                color: black;
+                text-decoration: underline;
+            }
         }
     </style>
 </head>
@@ -469,12 +734,14 @@
     <header>
         <div class="header-content">
             <a href="/" class="logo">
-                <span class="logo-icon">F</span>
-                Frank Miao
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">F</span>
+                <span class="logo-bracket">]</span>
             </a>
-            <a href="/" class="back-link">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+            <a href="/" class="home-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
                 </svg>
                 返回文章列表
             </a>
@@ -486,27 +753,72 @@
             <header class="article-header">
                 <div class="article-meta-top">
                     <span class="article-date">2026-03-09</span>
-                    <div class="article-tags">
-                        <span class="tag">编程</span><span class="tag">Lisp</span><span class="tag">历史</span>
-                    </div>
+                    <span class="article-meta-divider">·</span>
+                    <span class="article-read-time">4 分钟阅读</span>
+                    <span class="article-meta-divider">·</span>
+                    <span class="article-word-count">1.1k 字</span>
                 </div>
                 <h1>Lisp的根源</h1>
+                <p class="article-subtitle">McCarthy's 1960 paper showed how to build a complete programming language from a handful of simple operators.</p>
             </header>
+
+            <!-- Tab Navigation -->
+            <div class="tab-nav">
+                <button class="tab-btn active" data-tab="translation">中文翻译</button>
+                <button class="tab-btn" data-tab="original">英文原文</button>
+                <button class="tab-btn" data-tab="notes">学习笔记</button>
+            </div>
 
             <div class="article-content">
                 
-        <div class="section-label">原文精华</div>
-        <section id="original" class="original-section">
-            <h2>核心观点</h2>
-            <p>1960年，John McCarthy发表了一篇论文，展示了如何用少量简单操作构建完整的编程语言。</p><p>Lisp的核心理念是：用列表（list）同时表示代码和数据。这被称为"同像性"（homoiconicity）。</p><p>有两种清晰的编程模型：C模型和Lisp模型。C模型关注内存布局和性能，Lisp模型关注表达能力和抽象。</p><p>新语言正稳步向Lisp模型移动：运行时类型、垃圾回收、闭包、元编程——这些曾经是Lisp独有的特性，现在已经成为主流。</p><p>Lisp可以写自己。这是Lisp的标志性特征：用Lisp写的Lisp解释器只有几页代码。</p><p>McCarthy的论文不仅是技术文档，更是关于如何设计优雅系统的案例研究。</p>
-        </section>
+        <div id="translation" class="tab-content active">
+            <div class="content-section">
+                <p>1960年，John McCarthy发表了一篇论文，展示了如何用少量简单操作构建完整的编程语言。</p><p>Lisp的核心理念是：用列表（list）同时表示代码和数据。这被称为"同像性"（homoiconicity）。</p><p>有两种清晰的编程模型：C模型和Lisp模型。C模型关注内存布局和性能，Lisp模型关注表达能力和抽象。</p><p>新语言正稳步向Lisp模型移动：运行时类型、垃圾回收、闭包、元编程——这些曾经是Lisp独有的特性，现在已经成为主流。</p><p>Lisp可以写自己。这是Lisp的标志性特征：用Lisp写的Lisp解释器只有几页代码。</p><p>McCarthy的论文不仅是技术文档，更是关于如何设计优雅系统的案例研究。</p>
+            </div>
+        </div>
         
-        <div class="section-label">个人思考</div>
-        <section id="notes" class="notes-section">
-            <h2>学习笔记</h2>
-            <p><strong>核心洞察：</strong></p><p>这篇文章是技术性的，但核心思想很清晰：Lisp的优雅在于它的简洁性和自举能力。</p><p><strong>最有力的段落：</strong></p><blockquote>"He showed how, given a handful of simple operators and a notation for functions, you can build a whole programming language."</blockquote><p>（他展示了如何仅凭少量简单操作和函数表示法，就能构建完整的编程语言。）</p><blockquote>"A popular recipe for new programming languages in the past 20 years has been to take the C model of computing and add to it, piecemeal, parts taken from the Lisp model."</blockquote><p>（过去20年新编程语言的流行配方是：采用C的计算模型，然后逐步添加从Lisp模型借鉴的部件。）</p><p><strong>个人反思：</strong></p><p>这也解释了为什么PG如此推崇Lisp——它代表了编程语言设计的理想形态。对于投资者来说，理解这些技术演进的底层逻辑，有助于判断哪些技术有长期价值。</p>
-        </section>
+        <div id="original" class="tab-content">
+            <div class="content-section">
+                <p>In 1960, John McCarthy published a paper showing how to build a complete programming language from a handful of simple operators.</p><p>The core idea of Lisp: using lists to represent both code and data. This is called "homoiconicity."</p><p>There are two clear programming models: the C model and the Lisp model. The C model focuses on memory layout and performance; the Lisp model focuses on expressiveness and abstraction.</p><p>New languages are steadily moving toward the Lisp model: runtime typing, garbage collection, closures, metaprogramming—these were once unique to Lisp but are now mainstream.</p><p>Lisp can write itself. This is Lisp's signature feature: a Lisp interpreter written in Lisp is only a few pages of code.</p><p>McCarthy's paper is not just a technical document, but a case study in how to design elegant systems.</p>
+            </div>
+        </div>
+        
+        <div id="notes" class="tab-content">
+            <div class="content-section" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, transparent 100%); border-left: 3px solid var(--accent);">
+                <p><strong>核心洞察：</strong></p><p>这篇文章是技术性的，但核心思想很清晰：Lisp的优雅在于它的简洁性和自举能力。</p><p><strong>最有力的段落：</strong></p><blockquote>"He showed how, given a handful of simple operators and a notation for functions, you can build a whole programming language."</blockquote><p>（他展示了如何仅凭少量简单操作和函数表示法，就能构建完整的编程语言。）</p><blockquote>"A popular recipe for new programming languages in the past 20 years has been to take the C model of computing and add to it, piecemeal, parts taken from the Lisp model."</blockquote><p>（过去20年新编程语言的流行配方是：采用C的计算模型，然后逐步添加从Lisp模型借鉴的部件。）</p><p><strong>个人反思：</strong></p><p>这也解释了为什么PG如此推崇Lisp——它代表了编程语言设计的理想形态。对于投资者来说，理解这些技术演进的底层逻辑，有助于判断哪些技术有长期价值。</p>
+            </div>
+        </div>
     
+            </div>
+
+            <!-- Original Link -->
+            <div class="original-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span>原文：<a href="http://paulgraham.com/rootsoflisp.html" target="_blank" rel="noopener noreferrer">The Roots of Lisp</a></span>
+            </div>
+
+            <!-- Share Section -->
+            <div class="share-section">
+                <div class="share-title">分享这篇文章</div>
+                <div class="share-buttons">
+                    <button class="share-btn" onclick="shareToTwitter()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        Twitter
+                    </button>
+                    <button class="share-btn" onclick="copyLink()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        </svg>
+                        复制链接
+                    </button>
+                </div>
             </div>
         </article>
 
@@ -514,8 +826,9 @@
             <div class="toc-card">
                 <div class="toc-title">文章目录</div>
                 <ul class="toc-list" id="tocList">
-                    <li><a href="#original">核心观点</a></li>
-                    <li><a href="#notes">学习笔记</a></li>
+                    <li><a data-tab="translation" class="active">中文翻译</a></li>
+                    <li><a data-tab="original">英文原文</a></li>
+                    <li><a data-tab="notes">学习笔记</a></li>
                 </ul>
             </div>
         </aside>
@@ -523,39 +836,152 @@
 
     <footer>
         <div class="footer-content">
-            <p>学习笔记 by <a href="https://www.frankmiao.top">Frank Miao</a></p>
-            <p>内容源自 <a href="http://paulgraham.com">paulgraham.com</a></p>
+            <p>学习笔记 · 内容源自 <a href="http://paulgraham.com">paulgraham.com</a></p>
         </div>
     </footer>
 
+    <!-- Back to top button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="回到顶部">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
     <script>
-        // Progress bar
+        // Get article slug from URL
+        const articleSlug = window.location.pathname.split('/').pop().replace('.html', '');
+        const storageKey = `pg-essays-${articleSlug}`;
+
+        // Progress bar and back to top button
+        const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             document.getElementById('progressBar').style.width = scrolled + '%';
+
+            // Save scroll position
+            localStorage.setItem(`${storageKey}-scroll`, winScroll);
+
+            // Show/hide back to top button
+            if (winScroll > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
         });
 
-        // Active TOC link
-        const sections = document.querySelectorAll('.article-content h2[id]');
-        const tocLinks = document.querySelectorAll('.toc-list a');
+        // Restore scroll position
+        window.addEventListener('load', () => {
+            const savedScroll = localStorage.getItem(`${storageKey}-scroll`);
+            if (savedScroll) {
+                window.scrollTo({ top: parseInt(savedScroll), behavior: 'instant' });
+            }
+        });
 
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollY >= sectionTop - 150) {
-                    current = section.getAttribute('id');
+        // Tab switching with localStorage
+        function switchTab(tabName) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.tab === tabName) {
+                    btn.classList.add('active');
                 }
             });
 
-            tocLinks.forEach(link => {
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            const targetContent = document.getElementById(tabName);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+
+            // Update TOC
+            document.querySelectorAll('.toc-list a').forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
+                if (link.dataset.tab === tabName) {
                     link.classList.add('active');
                 }
             });
+
+            // Save tab preference
+            localStorage.setItem(`${storageKey}-tab`, tabName);
+
+            // Scroll to top of content
+            document.querySelector('.article-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Restore saved tab on load
+        window.addEventListener('load', () => {
+            const savedTab = localStorage.getItem(`${storageKey}-tab`);
+            if (savedTab && document.getElementById(savedTab)) {
+                switchTab(savedTab);
+            }
+        });
+
+        // Bind tab buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchTab(btn.dataset.tab);
+            });
+        });
+
+        // Bind TOC links
+        document.querySelectorAll('.toc-list a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchTab(link.dataset.tab);
+            });
+        });
+
+        // Share functions
+        function shareToTwitter() {
+            const text = encodeURIComponent(document.title);
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const btn = event.target.closest('.share-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 已复制';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Cmd/Ctrl + 1/2/3 to switch tabs
+            if ((e.metaKey || e.ctrlKey) && e.key >= '1' && e.key <= '3') {
+                e.preventDefault();
+                const tabs = ['translation', 'original', 'notes'];
+                switchTab(tabs[parseInt(e.key) - 1]);
+            }
+            // Press 'h' to go home
+            if (e.key === 'h' && !e.metaKey && !e.ctrlKey && e.target.tagName !== 'INPUT') {
+                window.location.href = '/';
+            }
+        });
+
+        // Lazy load images
+        document.addEventListener('DOMContentLoaded', () => {
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+            images.forEach(img => imageObserver.observe(img));
         });
     </script>
 </body>
