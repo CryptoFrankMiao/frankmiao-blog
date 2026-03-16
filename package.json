@@ -1,12 +1,12 @@
 {
-  "name": "frankmiao-pg-notes",
-  "version": "1.0.0",
-  "description": "Paul Graham 学习笔记博客",
+  "name": "frankmiao-blog",
+  "version": "2.0.0",
+  "description": "Frank's Knowledge Base - PG Essays / Crypto Daily / PE-VC Intel",
   "scripts": {
     "build": "node build.js",
-    "dev": "npx serve dist"
+    "dev": "npx serve dist -p 3000"
   },
-  "devDependencies": {
+  "dependencies": {
     "marked": "^9.1.6",
     "front-matter": "^4.0.2"
   }
