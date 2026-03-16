@@ -1,143 +1,110 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>加密日报 {{DATE}} — Frank's Lab</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪙</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0d1117; --bg-surface: #161b22; --bg-elevated: #1c2128; --bg-hover: #21262d;
-      --border: #30363d; --border-muted: #21262d;
-      --text: #e6edf3; --text-2: #8b949e; --text-3: #484f58;
-      --blue: #58a6ff; --blue-dim: rgba(88,166,255,0.08);
-      --green: #3fb950; --red: #f85149; --amber: #e8a838;
-      --mono: 'JetBrains Mono', monospace; --radius: 8px;
-    }
-    * { margin:0;padding:0;box-sizing:border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased; }
-    header { position:sticky;top:0;z-index:100;background:rgba(13,17,23,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-muted);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between; }
-    .logo { display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;color:var(--text); }
-    .logo-mark { width:28px;height:28px;background:var(--amber);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:#0d1117;font-family:var(--mono); }
-    nav { display:flex;align-items:center;gap:4px; }
-    nav a { color:var(--text-2);text-decoration:none;font-size:0.875rem;padding:6px 12px;border-radius:6px;transition:all 0.15s; }
-    nav a:hover { color:var(--text);background:var(--bg-hover); }
-    nav a.active { color:var(--text); }
-    .nav-dot { width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{date}} 加密日报 · FrankMiao</title>
+<style>
+:root {
+  --bg: #0d1117; --bg-surface: #161b22; --bg-elevated: #21262d;
+  --border: #30363d; --text: #e6edf3; --text-muted: #8b949e;
+  --blue: #58a6ff; --blue-dim: rgba(88,166,255,0.1);
+  --green: #3fb950; --red: #f85149; --amber: #e8a838;
+  --mono: 'JetBrains Mono','Courier New',monospace;
+  --sans: -apple-system,'Inter','Segoe UI',sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.7; }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-    .page-wrap { max-width: 860px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+.header { position: sticky; top: 0; z-index: 100; background: rgba(13,17,23,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 52px; display: flex; align-items: center; gap: 1rem; }
+.logo { font-weight: 700; font-size: 0.95rem; color: var(--amber); display: flex; align-items: center; gap: 0.6rem; }
+.logo-mark { width: 26px; height: 26px; background: var(--amber); color: #0d1117; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.8rem; }
+.breadcrumb { font-size: 0.8rem; color: var(--text-muted); }
+.breadcrumb a { color: var(--text-muted); }
 
-    .breadcrumb { font-size:0.78rem;color:var(--text-3);font-family:var(--mono);margin-bottom:1.5rem; }
-    .breadcrumb a { color:var(--text-3);text-decoration:none; }
-    .breadcrumb a:hover { color:var(--text-2); }
-    .breadcrumb span { margin:0 6px; }
+.container { max-width: 900px; margin: 0 auto; padding: 2.5rem 2rem; }
+.date-header { margin-bottom: 2rem; }
+.date-label { font-size: 0.7rem; color: var(--blue); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 0.5rem; }
+.date-title { font-size: 2rem; font-weight: 800; font-family: var(--mono); }
 
-    /* Market Snapshot */
-    .market-header { margin-bottom: 2.5rem; }
-    .market-label { font-size:0.72rem;color:var(--blue);font-weight:600;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--mono);margin-bottom:0.6rem; }
-    .market-date { font-size: 1.8rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin-bottom: 0.3rem; }
-    .market-weekday { font-size: 0.9rem; color: var(--text-3); margin-bottom: 1.5rem; font-family: var(--mono); }
+/* Market snapshot */
+.snapshot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+.snap-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; border-top: 3px solid var(--blue); }
+.snap-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+.snap-value { font-family: var(--mono); font-size: 1.6rem; font-weight: 700; color: var(--blue); }
+.snap-value.pos { color: var(--green); }
+.snap-value.neg { color: var(--red); }
 
-    .market-stats {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .market-stat {
-      background: var(--bg-surface); border: 1px solid var(--border-muted);
-      border-radius: var(--radius); padding: 1rem 1.25rem;
-    }
-    .market-stat-label { font-size:0.72rem;color:var(--text-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem; }
-    .market-stat-val { font-size: 1.4rem; font-weight: 700; font-family: var(--mono); color: var(--text); }
-    .market-stat-val.positive { color: var(--green); }
-    .market-stat-val.negative { color: var(--red); }
+/* Body */
+.md-body h1,.md-body h2,.md-body h3 { color: var(--text); margin: 2rem 0 0.75rem; font-weight: 700; }
+.md-body h2 { font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.35rem; color: var(--blue); }
+.md-body h3 { font-size: 1rem; }
+.md-body p { margin-bottom: 1rem; color: #c9d1d9; }
+.md-body ul,.md-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+.md-body li { margin-bottom: 0.35rem; color: #c9d1d9; }
+.md-body strong { color: var(--text); }
+.md-body blockquote { border-left: 3px solid var(--blue); padding: 0.75rem 1.25rem; margin: 1.5rem 0; background: var(--blue-dim); border-radius: 0 6px 6px 0; }
+.md-body blockquote p { margin: 0; color: var(--text-muted); }
+.md-body code { font-family: var(--mono); font-size: 0.85em; background: var(--bg-elevated); padding: 2px 6px; border-radius: 4px; color: var(--blue); }
+.md-body table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.88rem; }
+.md-body th { background: var(--bg-elevated); padding: 0.5rem 0.75rem; text-align: left; border: 1px solid var(--border); color: var(--text-muted); font-size: 0.78rem; }
+.md-body td { padding: 0.5rem 0.75rem; border: 1px solid var(--border); }
+.md-body hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
 
-    /* Body content */
-    .prose { font-size:0.93rem;color:var(--text-2);line-height:1.85; }
-    .prose h1 { font-size:1.3rem;color:var(--text);font-weight:700;margin:2rem 0 0.75rem;letter-spacing:-0.01em; }
-    .prose h2 { font-size:1.1rem;color:var(--text);font-weight:600;margin:2rem 0 0.75rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border-muted); }
-    .prose h3 { font-size:0.95rem;color:var(--text-2);font-weight:600;margin:1.5rem 0 0.5rem; }
-    .prose p { margin-bottom:0.9rem; }
-    .prose strong { color:var(--text);font-weight:600; }
-    .prose em { color:var(--text-2); }
-    .prose code { font-family:var(--mono);font-size:0.83rem;background:var(--bg-elevated);color:var(--blue);padding:2px 6px;border-radius:4px; }
-    .prose blockquote { border-left:3px solid var(--blue);padding:0.6rem 1rem;margin:1rem 0;color:var(--text-2);background:var(--blue-dim);border-radius:0 4px 4px 0;font-size:0.88rem; }
-    .prose ul,.prose ol { padding-left:1.5rem;margin-bottom:0.9rem; }
-    .prose li { margin-bottom:0.4rem; }
-    .prose a { color:var(--blue);text-decoration:none; }
-    .prose a:hover { text-decoration:underline; }
-    .prose hr { border:none;border-top:1px solid var(--border-muted);margin:2rem 0; }
-    .prose table { width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.85rem; }
-    .prose th { text-align:left;padding:8px 12px;background:var(--bg-elevated);color:var(--text);border:1px solid var(--border);font-family:var(--mono);font-size:0.78rem; }
-    .prose td { padding:8px 12px;border:1px solid var(--border-muted);color:var(--text-2); }
-    .prose tr:nth-child(even) td { background:var(--bg-surface); }
+/* Nav */
+.daily-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+.nav-link { font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 2px; }
+.nav-link:hover { color: var(--blue); text-decoration: none; }
+.nav-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+.nav-date { font-family: var(--mono); color: var(--blue); }
 
-    .back-nav { display:flex;gap:1rem;justify-content:space-between;padding:1.5rem 0;border-top:1px solid var(--border-muted);margin-top:2.5rem; }
-    .back-link { font-size:0.83rem;color:var(--text-2);text-decoration:none;font-family:var(--mono); }
-    .back-link:hover { color:var(--text); }
-
-    footer { border-top:1px solid var(--border-muted);padding:2rem;text-align:center; }
-    footer p { font-size:0.8rem;color:var(--text-3); }
-    footer a { color:var(--text-2);text-decoration:none; }
-
-    @media (max-width:600px) {
-      header { padding:0 1rem; }
-      .page-wrap { padding:2rem 1rem 4rem; }
-      .market-stats { grid-template-columns:1fr 1fr; }
-      .market-date { font-size:1.4rem; }
-      nav a { padding:6px 8px;font-size:0.8rem; }
-    }
-  </style>
+@media (max-width: 600px) {
+  .snapshot { grid-template-columns: 1fr; }
+  .date-title { font-size: 1.4rem; }
+}
+</style>
 </head>
 <body>
-<header>
-  <a href="/" class="logo"><div class="logo-mark">F</div><span>Frank's Lab</span></a>
-  <nav>
-    <a href="/pg.html"><span class="nav-dot" style="background:var(--amber)"></span>思想库</a>
-    <a href="/crypto.html" class="active"><span class="nav-dot" style="background:var(--blue)"></span>加密</a>
-    <a href="/intel.html"><span class="nav-dot" style="background:var(--green)"></span>一级市场</a>
-  </nav>
+<header class="header">
+  <a href="/" class="logo"><div class="logo-mark">F</div>FrankMiao</a>
+  <div class="breadcrumb">
+    <a href="/crypto.html">加密日报</a> / <span>{{date}}</span>
+  </div>
 </header>
 
-<div class="page-wrap">
-  <div class="breadcrumb">
-    <a href="/">Frank's Lab</a><span>/</span>
-    <a href="/crypto.html">加密日报</a><span>/</span>
-    {{DATE}}
+<div class="container">
+  <div class="date-header">
+    <div class="date-label">📊 加密市场日报</div>
+    <div class="date-title">{{date}}</div>
   </div>
 
-  <div class="market-header">
-    <div class="market-label">🪙 加密市场日报</div>
-    <div class="market-date">{{DATE}}</div>
-    <div class="market-weekday">{{WEEKDAY}}</div>
-
-    <div class="market-stats">
-      <div class="market-stat">
-        <div class="market-stat-label">BTC Price</div>
-        <div class="market-stat-val">${{BTC_PRICE}}</div>
-      </div>
-      <div class="market-stat">
-        <div class="market-stat-label">24h Change</div>
-        <div class="market-stat-val {{CHANGE_CLASS}}">{{CHANGE_24H}}</div>
-      </div>
-      <div class="market-stat">
-        <div class="market-stat-label">Fear & Greed</div>
-        <div class="market-stat-val">{{FGI}}</div>
-      </div>
+  <div class="snapshot">
+    <div class="snap-card">
+      <div class="snap-label">BTC 价格</div>
+      <div class="snap-value">{{btcPrice}}</div>
+    </div>
+    <div class="snap-card">
+      <div class="snap-label">24h 涨跌</div>
+      <div class="snap-value">{{change}}</div>
+    </div>
+    <div class="snap-card">
+      <div class="snap-label">恐惧贪婪指数</div>
+      <div class="snap-value">{{fgi}}</div>
     </div>
   </div>
 
-  <div class="prose">{{BODY_HTML}}</div>
+  <div class="md-body">{{body}}</div>
 
-  <div class="back-nav">
-    <a href="/crypto.html" class="back-link">← 全部日报</a>
-    <a href="/" class="back-link">首页 →</a>
+  <div class="daily-nav">
+    <div>
+      {{#prevLink}}<a href="{{prevLink}}" class="nav-link"><span class="nav-label">← 上一篇</span><span class="nav-date">{{prevDate}}</span></a>{{/prevLink}}
+    </div>
+    <div>
+      {{#nextLink}}<a href="{{nextLink}}" class="nav-link" style="text-align:right"><span class="nav-label">下一篇 →</span><span class="nav-date">{{nextDate}}</span></a>{{/nextLink}}
+    </div>
   </div>
 </div>
-
-<footer><p>Frank's Lab · <a href="/">首页</a> · <a href="/rss.xml">RSS</a></p></footer>
 </body>
 </html>
