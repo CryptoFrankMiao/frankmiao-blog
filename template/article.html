@@ -1,970 +1,173 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{TITLE}} - Frank's Automatic Notes</title>
-    <meta name="description" content="{{SUBTITLE}} - 用 Open Claw 深入研读经典文章">
-    <meta name="keywords" content="Paul Graham, PG Essays, 中文翻译, 学习笔记, {{TAGS}}">
-    <meta name="author" content="Frank">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="{{TITLE}} - Frank's Automatic Notes">
-    <meta property="og:description" content="{{SUBTITLE}}">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://www.frankmiao.top/articles/{{SLUG}}.html">
-    <meta property="og:site_name" content="Frank's Automatic Notes">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{{TITLE}} - Frank's Automatic Notes">
-    <meta name="twitter:description" content="{{SUBTITLE}}">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #141414;
-            --bg-card: #1a1a1a;
-            --bg-hover: #222222;
-            --bg-code: #1e1e1e;
-            --text-primary: #fafafa;
-            --text-secondary: #a0a0a0;
-            --text-muted: #666666;
-            --accent: #22c55e;
-            --accent-light: #4ade80;
-            --border: #2a2a2a;
-            --border-light: #333333;
-            --shadow: 0 1px 2px rgba(0,0,0,0.3);
-            --shadow-hover: 0 8px 30px rgba(0,0,0,0.5);
-            --radius: 12px;
-            --radius-sm: 8px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.8;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Progress Bar */
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 2px;
-            background: var(--accent);
-            z-index: 1000;
-            transition: width 0.1s;
-            width: 0%;
-        }
-
-        /* Header */
-        header {
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            color: var(--text-primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.1rem;
-        }
-
-        .logo-bracket {
-            font-size: 1.4rem;
-            font-weight: 300;
-            color: var(--accent);
-            opacity: 0.5;
-            line-height: 1;
-        }
-
-        .logo-text {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.02em;
-            line-height: 1;
-        }
-
-        .home-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            transition: all 0.2s;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-        }
-
-        .home-btn:hover {
-            color: var(--text-primary);
-            border-color: var(--accent);
-            background: var(--bg-hover);
-        }
-
-        .home-btn svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        /* Layout */
-        .article-layout {
-            display: grid;
-            grid-template-columns: 1fr 280px;
-            gap: 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 2rem 4rem;
-        }
-
-        /* Article Header */
-        .article-header {
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            padding-top: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .article-meta-top {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-            font-size: 0.85rem;
-            flex-wrap: wrap;
-        }
-
-        .article-date, .article-read-time, .article-word-count {
-            color: var(--text-muted);
-        }
-
-        .article-meta-divider {
-            color: var(--border-light);
-        }
-
-        .article-tags {
-            display: flex;
-            gap: 0.5rem;
-            margin-left: auto;
-        }
-
-        .tag {
-            background: var(--bg-card);
-            color: var(--text-secondary);
-            padding: 0.25rem 0.75rem;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            border: 1px solid var(--border);
-        }
-
-        .article-header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-        }
-
-        .article-subtitle {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            font-weight: 400;
-        }
-
-        /* Article Content */
-        .article-content {
-            max-width: 100%;
-        }
-
-        .article-content h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 3rem 0 1.25rem;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
-            scroll-margin-top: 100px;
-        }
-
-        .article-content h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 2rem 0 0.75rem;
-            color: var(--text-primary);
-            scroll-margin-top: 100px;
-        }
-
-        .article-content p {
-            margin-bottom: 1.5rem;
-            color: var(--text-secondary);
-            line-height: 1.9;
-        }
-
-        .content-section p:last-child {
-            margin-bottom: 0;
-        }
-
-        .article-content ul, .article-content ol {
-            margin: 1.25rem 0 1.5rem 1.5rem;
-            color: var(--text-secondary);
-        }
-
-        .article-content li {
-            margin-bottom: 0.75rem;
-        }
-
-        .article-content li::marker {
-            color: var(--accent);
-        }
-
-        .article-content blockquote {
-            border-left: 3px solid var(--accent);
-            padding-left: 1.5rem;
-            margin: 2rem 0;
-            font-style: italic;
-            color: var(--text-muted);
-        }
-
-        .article-content strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .article-content code {
-            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
-            background: var(--bg-code);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.9em;
-            color: var(--accent-light);
-        }
-
-        .article-content pre {
-            background: var(--bg-code);
-            padding: 1.5rem;
-            border-radius: var(--radius-sm);
-            overflow-x: auto;
-            margin: 1.5rem 0;
-            border: 1px solid var(--border);
-        }
-
-        .article-content pre code {
-            background: transparent;
-            color: var(--text-secondary);
-            padding: 0;
-        }
-
-        /* Code highlighting */
-        .article-content .code-block {
-            background: var(--bg-code);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            margin: 1.5rem 0;
-        }
-
-        .article-content .code-header {
-            background: var(--bg-hover);
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .article-content .code-header::before {
-            content: '';
-            width: 12px;
-            height: 12px;
-            background: var(--accent);
-            border-radius: 50%;
-            opacity: 0.5;
-        }
-
-        .article-content a {
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s;
-        }
-
-        .article-content a:hover {
-            border-bottom-color: var(--accent);
-        }
-
-        .article-content hr {
-            border: none;
-            border-top: 1px solid var(--border);
-            margin: 3rem 0;
-        }
-
-        /* Tab Navigation */
-        .tab-nav {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-
-        .tab-nav::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab-btn {
-            padding: 0.75rem 1.5rem;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -1px;
-            transition: all 0.2s;
-            font-family: inherit;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .tab-btn:hover {
-            color: var(--text-secondary);
-        }
-
-        .tab-btn.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-        }
-
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Sections */
-        .section-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .section-label::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        .content-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .content-section h2 {
-            margin-top: 0;
-        }
-
-        /* Table of Contents Sidebar */
-        .toc-sidebar {
-            position: sticky;
-            top: 100px;
-            height: fit-content;
-        }
-
-        .toc-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-        }
-
-        .toc-title {
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .toc-title::before {
-            content: '';
-            width: 4px;
-            height: 16px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        .toc-list {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .toc-list li {
-            margin: 0;
-            padding: 0;
-        }
-
-        .toc-list a {
-            display: block;
-            padding: 0.5rem 0;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            border-left: 2px solid transparent;
-            padding-left: 1rem;
-            margin-left: -1rem;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .toc-list a:hover {
-            color: var(--text-primary);
-            border-left-color: var(--accent);
-        }
-
-        .toc-list a.active {
-            color: var(--accent);
-            border-left-color: var(--accent);
-        }
-
-        /* Original Link */
-        .original-link {
-            margin-top: 2rem;
-            padding: 1.25rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .original-link svg {
-            width: 18px;
-            height: 18px;
-            color: var(--accent);
-            flex-shrink: 0;
-        }
-
-        .original-link a {
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s;
-        }
-
-        .original-link a:hover {
-            border-bottom-color: var(--accent);
-        }
-
-        /* Share Buttons */
-        .share-section {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .share-title {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .share-buttons {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .share-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .share-btn:hover {
-            border-color: var(--accent);
-            color: var(--text-primary);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border);
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-top: 5rem;
-        }
-
-        .footer-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        footer p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        footer a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        footer a:hover {
-            color: var(--accent);
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .article-layout {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .toc-sidebar {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem 1.25rem;
-            }
-
-            .header-content {
-                padding: 0;
-            }
-
-            .article-layout {
-                padding: 1.5rem 1.25rem 3rem;
-            }
-
-            .article-header h1 {
-                font-size: 1.75rem;
-            }
-
-            .article-subtitle {
-                font-size: 1rem;
-            }
-
-            .content-section {
-                padding: 1.5rem;
-            }
-
-            .article-content h2 {
-                font-size: 1.35rem;
-            }
-
-            .article-content h3 {
-                font-size: 1.15rem;
-            }
-
-            .article-tags {
-                margin-left: 0;
-                width: 100%;
-                margin-top: 0.5rem;
-            }
-
-            .article-meta-top {
-                gap: 0.5rem;
-            }
-
-            .logo-text {
-                display: none;
-            }
-        }
-
-        /* Back to top button */
-        .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 48px;
-            height: 48px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 99;
-            color: var(--text-secondary);
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            background: var(--bg-hover);
-            border-color: var(--accent);
-            color: var(--accent);
-            transform: translateY(-4px);
-        }
-
-        /* Print styles */
-        @media print {
-            header, .toc-sidebar, .share-section, .back-to-top, .progress-bar {
-                display: none !important;
-            }
-
-            body {
-                background: white;
-                color: black;
-            }
-
-            .article-layout {
-                padding: 2rem;
-                grid-template-columns: 1fr;
-            }
-
-            .content-section {
-                background: white;
-                border: 1px solid #ddd;
-                break-inside: avoid;
-            }
-
-            .tab-content {
-                display: block !important;
-            }
-
-            .tab-nav {
-                display: none;
-            }
-
-            a {
-                color: black;
-                text-decoration: underline;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}} · FrankMiao</title>
+<style>
+:root {
+  --bg: #0d1117; --bg-surface: #161b22; --bg-elevated: #21262d;
+  --border: #30363d; --text: #e6edf3; --text-muted: #8b949e;
+  --amber: #e8a838; --amber-dim: rgba(232,168,56,0.1);
+  --blue: #58a6ff; --green: #3fb950;
+  --mono: 'JetBrains Mono','Courier New',monospace;
+  --sans: -apple-system,'Inter','Segoe UI',sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.7; }
+a { color: var(--amber); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Progress bar */
+#progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--amber); z-index: 200; width: 0; transition: width 0.1s; }
+
+/* Header */
+.header { position: sticky; top: 0; z-index: 100; background: rgba(13,17,23,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 52px; display: flex; align-items: center; gap: 1rem; }
+.logo { font-weight: 700; font-size: 0.95rem; color: var(--amber); display: flex; align-items: center; gap: 0.6rem; }
+.logo-mark { width: 26px; height: 26px; background: var(--amber); color: #0d1117; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.8rem; }
+.breadcrumb { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; }
+.breadcrumb a { color: var(--text-muted); }
+.breadcrumb a:hover { color: var(--text); text-decoration: none; }
+
+/* Layout */
+.layout { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem; display: grid; grid-template-columns: 1fr 280px; gap: 3rem; align-items: start; }
+
+/* Article */
+.article-header { margin-bottom: 2rem; }
+.article-cat { display: inline-block; font-size: 0.7rem; color: var(--amber); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 0.75rem; }
+.article-title { font-size: 2rem; font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 1rem; }
+.article-meta { font-family: var(--mono); font-size: 0.8rem; color: var(--text-muted); display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+.tag { font-size: 0.7rem; padding: 2px 10px; border-radius: 100px; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-muted); }
+
+/* Summary */
+.summary-block { background: var(--amber-dim); border: 1px solid rgba(232,168,56,0.25); border-left: 3px solid var(--amber); border-radius: 0 8px 8px 0; padding: 1.5rem; margin-bottom: 2rem; }
+.summary-label { font-size: 0.7rem; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+.summary-block p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; }
+
+/* Tabs */
+.tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 2rem; gap: 0; }
+.tab-btn { padding: 0.6rem 1.25rem; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; background: none; border-top: none; border-left: none; border-right: none; transition: color 0.15s, border-color 0.15s; }
+.tab-btn.active { color: var(--amber); border-bottom-color: var(--amber); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Markdown body */
+.md-body h1,.md-body h2,.md-body h3,.md-body h4 { color: var(--text); margin: 2rem 0 0.75rem; font-weight: 700; line-height: 1.3; }
+.md-body h2 { font-size: 1.35rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+.md-body h3 { font-size: 1.1rem; color: var(--amber); }
+.md-body p { margin-bottom: 1rem; color: #c9d1d9; }
+.md-body blockquote { border-left: 3px solid var(--amber); padding: 0.75rem 1.25rem; margin: 1.5rem 0; background: var(--amber-dim); border-radius: 0 6px 6px 0; }
+.md-body blockquote p { margin: 0; color: var(--text-muted); font-style: italic; }
+.md-body code { font-family: var(--mono); font-size: 0.85em; background: var(--bg-elevated); padding: 2px 6px; border-radius: 4px; color: #f0883e; }
+.md-body pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; overflow-x: auto; margin: 1.5rem 0; }
+.md-body pre code { background: none; padding: 0; color: #c9d1d9; }
+.md-body ul,.md-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+.md-body li { margin-bottom: 0.35rem; color: #c9d1d9; }
+.md-body table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+.md-body th { background: var(--bg-elevated); padding: 0.5rem 0.75rem; text-align: left; border: 1px solid var(--border); color: var(--text-muted); font-size: 0.8rem; }
+.md-body td { padding: 0.5rem 0.75rem; border: 1px solid var(--border); }
+.md-body strong { color: var(--text); }
+.md-body hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+/* Sidebar */
+.sidebar { position: sticky; top: 70px; }
+.sidebar-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+.sidebar-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem; font-weight: 700; }
+.meta-row { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+.meta-row:last-child { border-bottom: none; }
+.meta-key { color: var(--text-muted); }
+.meta-val { color: var(--text); font-family: var(--mono); }
+.orig-link { display: block; margin-top: 0.75rem; padding: 0.5rem 1rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 6px; font-size: 0.8rem; color: var(--blue); text-align: center; }
+.orig-link:hover { border-color: var(--blue); text-decoration: none; }
+.related-item { display: flex; flex-direction: column; gap: 2px; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+.related-item:last-child { border-bottom: none; }
+.related-title { font-size: 0.85rem; color: var(--text); line-height: 1.3; }
+.related-cat { font-size: 0.7rem; color: var(--amber); }
+.related-item:hover .related-title { color: var(--amber); }
+
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .article-title { font-size: 1.5rem; }
+}
+</style>
 </head>
 <body>
-    <div class="progress-bar" id="progressBar"></div>
-    
-    <header>
-        <div class="header-content">
-            <a href="/" class="logo">
-                <span class="logo-bracket">[</span>
-                <span class="logo-text">F</span>
-                <span class="logo-bracket">]</span>
-            </a>
-            <a href="/" class="home-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-                返回文章列表
-            </a>
-        </div>
-    </header>
+<div id="progress"></div>
 
-    <div class="article-layout">
-        <article>
-            <header class="article-header">
-                <div class="article-meta-top">
-                    <span class="article-date">{{DATE}}</span>
-                    <span class="article-meta-divider">·</span>
-                    <span class="article-read-time">{{READ_TIME}} 分钟阅读</span>
-                    <span class="article-meta-divider">·</span>
-                    <span class="article-word-count">{{WORD_COUNT}} 字</span>
-                </div>
-                <h1>{{TITLE}}</h1>
-                <p class="article-subtitle">{{SUBTITLE}}</p>
-            </header>
+<header class="header">
+  <a href="/" class="logo"><div class="logo-mark">F</div>FrankMiao</a>
+  <div class="breadcrumb">
+    <a href="/pg.html">PG Essays</a>
+    <span>/</span>
+    <span>{{category}}</span>
+    <span>/</span>
+    <span>{{title}}</span>
+  </div>
+</header>
 
-            <!-- Tab Navigation -->
-            <div class="tab-nav">
-                <button class="tab-btn active" data-tab="translation">中文翻译</button>
-                <button class="tab-btn" data-tab="original">英文原文</button>
-                <button class="tab-btn" data-tab="notes">学习笔记</button>
-            </div>
-
-            <div class="article-content">
-                {{CONTENT}}
-            </div>
-
-            <!-- Original Link -->
-            <div class="original-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-                <span>原文：<a href="{{ORIGINAL_URL}}" target="_blank" rel="noopener noreferrer">{{TITLE_EN}}</a></span>
-            </div>
-
-            <!-- Share Section -->
-            <div class="share-section">
-                <div class="share-title">分享这篇文章</div>
-                <div class="share-buttons">
-                    <button class="share-btn" onclick="shareToTwitter()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
-                        Twitter
-                    </button>
-                    <button class="share-btn" onclick="copyLink()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                        </svg>
-                        复制链接
-                    </button>
-                </div>
-            </div>
-        </article>
-
-        <aside class="toc-sidebar">
-            <div class="toc-card">
-                <div class="toc-title">文章目录</div>
-                <ul class="toc-list" id="tocList">
-                    <li><a data-tab="translation" class="active">中文翻译</a></li>
-                    <li><a data-tab="original">英文原文</a></li>
-                    <li><a data-tab="notes">学习笔记</a></li>
-                </ul>
-            </div>
-        </aside>
+<div class="layout">
+  <main>
+    <div class="article-header">
+      <div class="article-cat">{{category}}</div>
+      <h1 class="article-title">{{title}}</h1>
+      <div class="article-meta">
+        <span>{{date}}</span>
+        <span>约 {{readTime}} 分钟</span>
+        <span>{{wordCount}} 字</span>
+      </div>
+      <div class="tags">{{tags}}</div>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <p>学习笔记 · 内容源自 <a href="http://paulgraham.com">paulgraham.com</a></p>
-        </div>
-    </footer>
+    <div class="summary-block">
+      <div class="summary-label">📌 精要摘要</div>
+      <div class="md-body">{{summary}}</div>
+    </div>
 
-    <!-- Back to top button -->
-    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="回到顶部">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 15l-6-6-6 6"/>
-        </svg>
-    </button>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('zh')">🇨🇳 中文全文</button>
+      <button class="tab-btn" onclick="switchTab('orig')">🔗 原文链接</button>
+    </div>
 
-    <script>
-        // Get article slug from URL
-        const articleSlug = window.location.pathname.split('/').pop().replace('.html', '');
-        const storageKey = `pg-essays-${articleSlug}`;
+    <div id="tab-zh" class="tab-content active">
+      <div class="md-body">{{zhContent}}</div>
+    </div>
+    <div id="tab-orig" class="tab-content">
+      <p style="color:var(--text-muted);margin-bottom:1rem">查看 Paul Graham 原文：</p>
+      <a href="{{originalUrl}}" target="_blank" rel="noopener" class="orig-link" style="font-size:0.9rem;display:block;padding:1rem;">
+        {{originalUrl}} ↗
+      </a>
+    </div>
+  </main>
 
-        // Progress bar and back to top button
-        const backToTopBtn = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('progressBar').style.width = scrolled + '%';
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-label">文章信息</div>
+      <div class="meta-row"><span class="meta-key">分类</span><span class="meta-val">{{category}}</span></div>
+      <div class="meta-row"><span class="meta-key">日期</span><span class="meta-val">{{date}}</span></div>
+      <div class="meta-row"><span class="meta-key">字数</span><span class="meta-val">{{wordCount}}</span></div>
+      <div class="meta-row"><span class="meta-key">阅读</span><span class="meta-val">{{readTime}}min</span></div>
+      <a href="{{originalUrl}}" target="_blank" class="orig-link">查看英文原文 ↗</a>
+    </div>
+    <div class="sidebar-card">
+      <div class="sidebar-label">同类文章</div>
+      {{relatedArticles}}
+    </div>
+  </aside>
+</div>
 
-            // Save scroll position
-            localStorage.setItem(`${storageKey}-scroll`, winScroll);
-
-            // Show/hide back to top button
-            if (winScroll > 500) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        });
-
-        // Restore scroll position
-        window.addEventListener('load', () => {
-            const savedScroll = localStorage.getItem(`${storageKey}-scroll`);
-            if (savedScroll) {
-                window.scrollTo({ top: parseInt(savedScroll), behavior: 'instant' });
-            }
-        });
-
-        // Tab switching with localStorage
-        function switchTab(tabName) {
-            // Update buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.tab === tabName) {
-                    btn.classList.add('active');
-                }
-            });
-
-            // Update content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            const targetContent = document.getElementById(tabName);
-            if (targetContent) {
-                targetContent.classList.add('active');
-            }
-
-            // Update TOC
-            document.querySelectorAll('.toc-list a').forEach(link => {
-                link.classList.remove('active');
-                if (link.dataset.tab === tabName) {
-                    link.classList.add('active');
-                }
-            });
-
-            // Save tab preference
-            localStorage.setItem(`${storageKey}-tab`, tabName);
-
-            // Scroll to top of content
-            document.querySelector('.article-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        // Restore saved tab on load
-        window.addEventListener('load', () => {
-            const savedTab = localStorage.getItem(`${storageKey}-tab`);
-            if (savedTab && document.getElementById(savedTab)) {
-                switchTab(savedTab);
-            }
-        });
-
-        // Bind tab buttons
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                switchTab(btn.dataset.tab);
-            });
-        });
-
-        // Bind TOC links
-        document.querySelectorAll('.toc-list a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                switchTab(link.dataset.tab);
-            });
-        });
-
-        // Share functions
-        function shareToTwitter() {
-            const text = encodeURIComponent(document.title);
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
-        }
-
-        function copyLink() {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                const btn = event.target.closest('.share-btn');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> 已复制';
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                }, 2000);
-            });
-        }
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            // Cmd/Ctrl + 1/2/3 to switch tabs
-            if ((e.metaKey || e.ctrlKey) && e.key >= '1' && e.key <= '3') {
-                e.preventDefault();
-                const tabs = ['translation', 'original', 'notes'];
-                switchTab(tabs[parseInt(e.key) - 1]);
-            }
-            // Press 'h' to go home
-            if (e.key === 'h' && !e.metaKey && !e.ctrlKey && e.target.tagName !== 'INPUT') {
-                window.location.href = '/';
-            }
-        });
-
-        // Lazy load images
-        document.addEventListener('DOMContentLoaded', () => {
-            const images = document.querySelectorAll('img[data-src]');
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                        observer.unobserve(img);
-                    }
-                });
-            });
-            images.forEach(img => imageObserver.observe(img));
-        });
-    </script>
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&tab==='zh')||(i===1&&tab==='orig')));
+  document.getElementById('tab-zh').classList.toggle('active', tab==='zh');
+  document.getElementById('tab-orig').classList.toggle('active', tab==='orig');
+}
+window.addEventListener('scroll', () => {
+  const el = document.documentElement;
+  const pct = el.scrollTop / (el.scrollHeight - el.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
 </body>
 </html>
