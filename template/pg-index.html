@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paul Graham Essays — Frank's Lab</title>
+  <meta name="description" content="Paul Graham 文章精读：中文翻译 + 精要摘要，{{ARCHIVED_COUNT}}/{{TOTAL_ESSAYS}} 篇">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0d1117;--bg-surface:#161b22;--bg-elevated:#1c2128;--bg-hover:#21262d;
+      --border:#30363d;--border-muted:#21262d;
+      --text:#e6edf3;--text-2:#8b949e;--text-3:#484f58;
+      --amber:#e8a838;--amber-dim:rgba(232,168,56,0.08);
+      --blue:#58a6ff;--green:#3fb950;
+      --mono:'JetBrains Mono',monospace;--radius:8px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+    body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;}
+    header{position:sticky;top:0;z-index:100;background:rgba(13,17,23,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-muted);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;}
+    .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;color:var(--text);}
+    .logo-mark{width:28px;height:28px;background:var(--amber);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:#0d1117;font-family:var(--mono);}
+    nav{display:flex;align-items:center;gap:4px;}
+    nav a{color:var(--text-2);text-decoration:none;font-size:0.875rem;padding:6px 12px;border-radius:6px;transition:all 0.15s;}
+    nav a:hover{color:var(--text);background:var(--bg-hover);}nav a.active{color:var(--text);}
+    .nav-dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle;}
+
+    .page-hero{padding:4rem 2rem 3rem;max-width:900px;margin:0 auto;}
+    .page-hero-label{font-size:0.72rem;color:var(--amber);font-weight:600;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--mono);margin-bottom:0.75rem;}
+    .page-hero h1{font-size:2rem;font-weight:700;color:var(--text);letter-spacing:-0.025em;margin-bottom:0.6rem;}
+    .page-hero p{font-size:0.95rem;color:var(--text-2);max-width:520px;line-height:1.7;}
+    .progress-line{margin-top:1.5rem;display:flex;align-items:center;gap:1rem;}
+    .progress-bar-bg{flex:1;height:3px;background:var(--border-muted);border-radius:2px;max-width:200px;}
+    .progress-bar-fill{height:100%;background:var(--amber);border-radius:2px;}
+    .progress-text{font-size:0.78rem;color:var(--text-3);font-family:var(--mono);}
+
+    .controls{max-width:1100px;margin:0 auto;padding:0 2rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+    .filter-group{display:flex;gap:0.4rem;flex-wrap:wrap;}
+    .filter-btn{font-size:0.78rem;font-weight:500;padding:5px 12px;border-radius:100px;border:1px solid var(--border-muted);background:var(--bg-surface);color:var(--text-2);cursor:pointer;transition:all 0.15s;font-family:inherit;}
+    .filter-btn:hover{border-color:var(--amber);color:var(--text);}
+    .filter-btn.active{background:var(--amber);border-color:var(--amber);color:#0d1117;font-weight:600;}
+    .search-input{background:var(--bg-surface);border:1px solid var(--border-muted);border-radius:6px;color:var(--text);padding:6px 12px;font-size:0.85rem;font-family:inherit;width:220px;transition:border-color 0.15s;}
+    .search-input:focus{outline:none;border-color:var(--amber);}
+    .search-input::placeholder{color:var(--text-3);}
+    .results-label{font-size:0.8rem;color:var(--text-3);font-family:var(--mono);}
+
+    .articles-grid{max-width:1100px;margin:0 auto;padding:0 2rem 5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+    .pg-card{display:flex;flex-direction:column;background:var(--bg-surface);border:1px solid var(--border-muted);border-radius:var(--radius);padding:1.25rem;text-decoration:none;color:inherit;transition:all 0.2s;}
+    .pg-card:hover{border-color:var(--amber);background:var(--bg-elevated);transform:translateY(-2px);}
+    .pg-card.hidden{display:none;}
+    .pg-card-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;}
+    .pg-category{font-size:0.72rem;color:var(--amber);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;}
+    .pg-date{font-size:0.72rem;color:var(--text-3);font-family:var(--mono);}
+    .pg-card-title{font-size:0.95rem;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:0.3rem;}
+    .pg-card-en{font-size:0.78rem;color:var(--text-3);margin-bottom:0.7rem;font-style:italic;}
+    .pg-card-excerpt{font-size:0.82rem;color:var(--text-2);line-height:1.6;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:0.75rem;}
+    .pg-card-tags{display:flex;gap:0.4rem;flex-wrap:wrap;}
+    .tag{font-size:0.7rem;padding:2px 8px;background:var(--bg-hover);color:var(--text-3);border-radius:100px;border:1px solid var(--border-muted);}
+    .no-results{text-align:center;padding:4rem 2rem;color:var(--text-3);grid-column:1/-1;display:none;}
+
+    footer{border-top:1px solid var(--border-muted);padding:2rem;text-align:center;}
+    footer p{font-size:0.8rem;color:var(--text-3);}footer a{color:var(--text-2);text-decoration:none;}
+
+    @media(max-width:900px){.articles-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:600px){header{padding:0 1rem;}.page-hero{padding:3rem 1rem 2rem;}.controls{padding:0 1rem 1rem;}.articles-grid{grid-template-columns:1fr;padding:0 1rem 4rem;}.page-hero h1{font-size:1.6rem;}nav a{padding:6px 8px;font-size:0.8rem;}}
+  </style>
+</head>
+<body>
+<header>
+  <a href="/" class="logo"><div class="logo-mark">F</div><span>Frank's Lab</span></a>
+  <nav>
+    <a href="/pg.html" class="active"><span class="nav-dot" style="background:var(--amber)"></span>思想库</a>
+    <a href="/crypto.html"><span class="nav-dot" style="background:var(--blue)"></span>加密</a>
+    <a href="/intel.html"><span class="nav-dot" style="background:var(--green)"></span>一级市场</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-label">📚 Paul Graham Essays</div>
+  <h1>思想库</h1>
+  <p>精读 Paul Graham 的 {{TOTAL_ESSAYS}} 篇文章，提供中文翻译与精要摘要。Y Combinator 联合创始人，硅谷最具影响力的思想家之一。</p>
+  <div class="progress-line">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" style="width:{{ARCHIVED_COUNT}}%"></div>
+    </div>
+    <span class="progress-text">{{ARCHIVED_COUNT}} / {{TOTAL_ESSAYS}} 篇已归档</span>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="filter-group">{{CAT_BUTTONS}}</div>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <span class="results-label" id="resultsLabel">共 {{TOTAL_COUNT}} 篇</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="搜索文章…">
+  </div>
+</div>
+
+<div class="articles-grid" id="grid">
+  {{ARTICLES_GRID}}
+  <div class="no-results" id="noResults">🔍 未找到匹配文章</div>
+</div>
+
+<footer><p>Frank's Lab · <a href="/">首页</a> · <a href="/rss.xml">RSS</a></p></footer>
+
+<script>
+  const cards = document.querySelectorAll('.pg-card');
+  const noResults = document.getElementById('noResults');
+  const resultsLabel = document.getElementById('resultsLabel');
+  const searchInput = document.getElementById('searchInput');
+  let currentCat = 'all';
+
+  function applyFilters() {
+    const q = searchInput.value.toLowerCase().trim();
+    let count = 0;
+    cards.forEach(card => {
+      const title = card.querySelector('.pg-card-title').textContent.toLowerCase();
+      const en = card.querySelector('.pg-card-en').textContent.toLowerCase();
+      const excerpt = card.querySelector('.pg-card-excerpt').textContent.toLowerCase();
+      const cat = card.dataset.cat;
+      const matchSearch = !q || title.includes(q) || en.includes(q) || excerpt.includes(q);
+      const matchCat = currentCat === 'all' || cat === currentCat;
+      if (matchSearch && matchCat) { card.classList.remove('hidden'); count++; }
+      else card.classList.add('hidden');
+    });
+    noResults.style.display = count === 0 ? 'block' : 'none';
+    resultsLabel.textContent = '共 ' + count + ' 篇';
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat;
+      applyFilters();
+    });
+  });
+
+  searchInput.addEventListener('input', applyFilters);
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && e.target.tagName !== 'INPUT') { e.preventDefault(); searchInput.focus(); }
+    if (e.key === 'Escape' && e.target === searchInput) { searchInput.value = ''; searchInput.blur(); applyFilters(); }
+  });
+</script>
+</body>
+</html>
