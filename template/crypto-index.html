@@ -1,86 +1,77 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>加密市场日报 — Frank's Lab</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪙</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root{--bg:#0d1117;--bg-surface:#161b22;--bg-elevated:#1c2128;--bg-hover:#21262d;--border:#30363d;--border-muted:#21262d;--text:#e6edf3;--text-2:#8b949e;--text-3:#484f58;--blue:#58a6ff;--green:#3fb950;--red:#f85149;--amber:#e8a838;--mono:'JetBrains Mono',monospace;--radius:8px;}
-    *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-    body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;}
-    header{position:sticky;top:0;z-index:100;background:rgba(13,17,23,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-muted);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;}
-    .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;color:var(--text);}
-    .logo-mark{width:28px;height:28px;background:var(--amber);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:#0d1117;font-family:var(--mono);}
-    nav{display:flex;align-items:center;gap:4px;}nav a{color:var(--text-2);text-decoration:none;font-size:0.875rem;padding:6px 12px;border-radius:6px;transition:all 0.15s;}
-    nav a:hover{color:var(--text);background:var(--bg-hover);}nav a.active{color:var(--text);}
-    .nav-dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加密市场日报 · FrankMiao</title>
+<style>
+:root {
+  --bg: #0d1117; --bg-surface: #161b22; --bg-elevated: #21262d;
+  --border: #30363d; --text: #e6edf3; --text-muted: #8b949e;
+  --blue: #58a6ff; --blue-dim: rgba(88,166,255,0.1);
+  --green: #3fb950; --red: #f85149; --amber: #e8a838;
+  --mono: 'JetBrains Mono','Courier New',monospace;
+  --sans: -apple-system,'Inter','Segoe UI',sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); }
+a { color: inherit; text-decoration: none; }
 
-    .page-hero{padding:4rem 2rem 2.5rem;max-width:900px;margin:0 auto;}
-    .page-hero-label{font-size:0.72rem;color:var(--blue);font-weight:600;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--mono);margin-bottom:0.75rem;}
-    .page-hero h1{font-size:2rem;font-weight:700;color:var(--text);letter-spacing:-0.025em;margin-bottom:0.5rem;}
-    .page-hero p{font-size:0.95rem;color:var(--text-2);max-width:520px;line-height:1.7;}
-    .stat-row{display:flex;gap:2rem;margin-top:1.5rem;}
-    .stat-item{text-align:left;}
-    .stat-val{font-size:1.4rem;font-weight:700;color:var(--text);font-family:var(--mono);}
-    .stat-label{font-size:0.72rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.05em;}
+.header { position: sticky; top: 0; z-index: 100; background: rgba(13,17,23,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 52px; display: flex; align-items: center; gap: 1rem; }
+.logo { font-weight: 700; font-size: 0.95rem; color: var(--amber); display: flex; align-items: center; gap: 0.6rem; }
+.logo-mark { width: 26px; height: 26px; background: var(--amber); color: #0d1117; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.8rem; }
+.nav-links { display: flex; gap: 0; margin-left: auto; }
+.nav-links a { padding: 0 1rem; height: 52px; display: flex; align-items: center; font-size: 0.875rem; color: var(--text-muted); }
 
-    .table-wrap{max-width:900px;margin:0 auto;padding:0 2rem 5rem;}
-    .table-header{display:grid;grid-template-columns:110px 110px 90px 90px 1fr;gap:1rem;padding:0.6rem 1.25rem;font-size:0.72rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;font-family:var(--mono);}
-    .daily-list{background:var(--bg-surface);border:1px solid var(--border-muted);border-radius:var(--radius);overflow:hidden;}
-    .daily-row{display:grid;grid-template-columns:110px 110px 90px 90px 1fr;align-items:center;padding:0.9rem 1.25rem;border-bottom:1px solid var(--border-muted);text-decoration:none;color:inherit;transition:background 0.15s;gap:1rem;}
-    .daily-row:last-child{border-bottom:none;}
-    .daily-row:hover{background:var(--bg-hover);}
-    .daily-date{font-size:0.85rem;color:var(--text-2);font-family:var(--mono);}
-    .daily-price{font-size:0.88rem;color:var(--text);font-family:var(--mono);font-weight:500;}
-    .daily-change{font-size:0.85rem;font-family:var(--mono);font-weight:600;}
-    .daily-change.positive{color:var(--green);}
-    .daily-change.negative{color:var(--red);}
-    .daily-fgi{font-size:0.78rem;color:var(--text-3);font-family:var(--mono);}
-    .daily-news{font-size:0.82rem;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.page-header { max-width: 1000px; margin: 0 auto; padding: 3rem 2rem 2rem; }
+.page-title { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+.page-title span { color: var(--blue); }
+.page-sub { color: var(--text-muted); font-size: 0.95rem; }
+.count { font-family: var(--mono); color: var(--blue); font-size: 0.85rem; margin-top: 0.5rem; }
 
-    footer{border-top:1px solid var(--border-muted);padding:2rem;text-align:center;}
-    footer p{font-size:0.8rem;color:var(--text-3);}footer a{color:var(--text-2);text-decoration:none;}
+.table-wrap { max-width: 1000px; margin: 0 auto; padding: 0 2rem 4rem; }
+.crypto-table { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.crypto-header { display: grid; grid-template-columns: 130px 150px 110px 80px 1fr; padding: 0.75rem 1.25rem; background: var(--bg-elevated); font-size: 0.72rem; color: var(--text-muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+.crypto-row { display: grid; grid-template-columns: 130px 150px 110px 80px 1fr; padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; align-items: center; transition: background 0.1s; }
+.crypto-row:last-child { border-bottom: none; }
+.crypto-row:hover { background: var(--bg-elevated); }
+.cr-date { font-family: var(--mono); color: var(--text-muted); font-size: 0.82rem; }
+.cr-price { font-family: var(--mono); font-weight: 700; color: var(--blue); }
+.cr-change { font-family: var(--mono); font-weight: 600; }
+.cr-change.pos { color: var(--green); }
+.cr-change.neg { color: var(--red); }
+.cr-fgi { font-family: var(--mono); color: var(--text-muted); }
+.cr-hl { color: var(--text-muted); font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    @media(max-width:600px){
-      header{padding:0 1rem;}.page-hero{padding:3rem 1rem 2rem;}.table-wrap{padding:0 1rem 4rem;}
-      .table-header{display:none;}
-      .daily-row{grid-template-columns:90px 90px 70px 1fr;}
-      .daily-fgi{display:none;}.page-hero h1{font-size:1.6rem;}
-      nav a{padding:6px 8px;font-size:0.8rem;}
-    }
-  </style>
+@media (max-width: 700px) {
+  .crypto-header, .crypto-row { grid-template-columns: 100px 130px 90px 1fr; }
+  .cr-hl { display: none; }
+}
+</style>
 </head>
 <body>
-<header>
-  <a href="/" class="logo"><div class="logo-mark">F</div><span>Frank's Lab</span></a>
-  <nav>
-    <a href="/pg.html"><span class="nav-dot" style="background:var(--amber)"></span>思想库</a>
-    <a href="/crypto.html" class="active"><span class="nav-dot" style="background:var(--blue)"></span>加密</a>
-    <a href="/intel.html"><span class="nav-dot" style="background:var(--green)"></span>一级市场</a>
+<header class="header">
+  <a href="/" class="logo"><div class="logo-mark">F</div>FrankMiao</a>
+  <nav class="nav-links">
+    <a href="/">首页</a>
+    <a href="/pg.html">PG Essays</a>
+    <a href="/intel.html">一级情报</a>
   </nav>
 </header>
 
-<div class="page-hero">
-  <div class="page-hero-label">🪙 加密市场日报</div>
-  <h1>市场日报</h1>
-  <p>每日追踪 BTC 价格、市场情绪指数、重大新闻与链上信号。基于第一性原理理解加密市场的结构性变化。</p>
-  <div class="stat-row">
-    <div class="stat-item"><div class="stat-val">{{TOTAL_COUNT}}</div><div class="stat-label">日报期数</div></div>
-  </div>
+<div class="page-header">
+  <h1 class="page-title">加密市场<span>日报</span></h1>
+  <p class="page-sub">每日加密市场复盘 · BTC 价格 · 恐惧贪婪指数 · 关键事件</p>
+  <div class="count">共 {{cryptoCount}} 期</div>
 </div>
 
 <div class="table-wrap">
-  <div class="table-header">
-    <span>日期</span><span>BTC 价格</span><span>24h</span><span>恐贪指数</span><span>头条</span>
-  </div>
-  <div class="daily-list">
-    {{DAILY_ROWS}}
+  <div class="crypto-table">
+    <div class="crypto-header">
+      <span>日期</span><span>BTC 价格</span><span>24h 涨跌</span><span>FGI</span><span>头条</span>
+    </div>
+    {{cryptoRows}}
   </div>
 </div>
-
-<footer><p>Frank's Lab · <a href="/">首页</a> · <a href="/rss.xml">RSS</a></p></footer>
 </body>
 </html>
